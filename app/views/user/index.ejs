@@ -1,0 +1,50 @@
+
+<%-include('../partials/head.ejs')%>
+<%-include('../partials/hero.ejs')%>
+<%-include('../partials/categories.ejs')%>
+<%-include('../partials/featured.ejs') %>
+<%-include('../partials/banner.ejs')%>
+<%-include('../partials/latest.ejs')%>
+<%-include('../partials/blog.ejs')%>
+<script>
+
+    function searchFun(value) {
+        document.getElementById("formsearch").setAttribute('action', '/shop?search=' + value + '')
+        $.ajax({
+            type: "POST",
+            url: "/search",
+            data: { value },
+            dataType: "json",
+            encode: true,
+        }).done(function (data) {
+  
+            //   
+            if (data == 'noresult') {
+                resHTML = '<h6 class="text-secondary ">NO RESULT</h6>'
+                $("#searchResult").html(resHTML)
+            } else {
+                $("#searchResult").html('')
+                resHTML = ''
+                data.search.forEach(function (val) {
+                  if (val.type == 'product') {
+                        resHTML += '<a href="/productDetail/' + val.id + '"><h6 class="text-dark ms-2 ">'+ val.cate +' of Size' + val.titile + ' </h6></a>'
+                      }else{
+                    resHTML += '<a href="/productDetail/' + val.id + '"><h6 class="text-dark ms-2 ">'+ val.cate +' of Size' + val.titile + ' </h6></a>'
+  
+                  }
+                });
+                $("#searchResult").append(resHTML)
+            }
+        });
+    }
+    $(document).ready(function(){
+    $("#input-field").click(function(){
+      $("#adSearchBar").css("display", "block");
+    });
+    
+    $(".close").click(function(){
+      $("#adSearchBar").css("display", "none");
+    });
+  });
+  
+  </script>

@@ -1,0 +1,121 @@
+<div class="col-md-6 offset-md-3 mt-5 container-fluid">
+  <% if (message.type) { %>
+
+  <div
+    class="alert alert-<%= message.type === 'success' ?'success' : 'danger' %>"
+    role="alert"
+  >
+    <%= message.body %>
+  </div>
+  <% } %>
+  <a href="/admin/adminP">
+    <img src="/images/logo.jpg" height="60" />
+  </a>
+  <br />
+  <a class="mt-3 d-flex">DrTyre Stock Adding Form</a>
+  <h1>Add product with Images</h1>
+  <form
+    accept-charset="UTF-8"
+    action="/admin/addProducts"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Brand Name</label>
+      <select
+        class="form-control"
+        id="exampleFormControlSelect1"
+        name="brand"
+        required="required"
+      >
+        <option value="">Select Brand</option>
+
+        <% category.forEach((cate)=>{ %> <% if (cate.listed){ %>
+
+        <option value="<%= cate._id %>"><%= cate.brand %></option>
+
+        <% } %> <% }) %>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Rim</label>
+      <select
+        class="form-control"
+        id="exampleFormControlSelect2"
+        name="rim"
+        required="required"
+      >
+        <option>R14</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Size</label>
+      <select
+        class="form-control"
+        id="exampleFormControlSelect3"
+        name="size"
+        required="required"
+      >
+        <option value="155/55R14">155/55R14</option>
+        <option value="155/65R14">155/65R14</option>
+        <option value="155/70R14">155/70R14</option>
+        <option value="165/55R14">165/55R14</option>
+        <option value="165/60R14">165/60R14</option>
+        <option value="175/60R14">175/60R14</option>
+        <option value="175/65R14">175/65R14</option>
+        <option value="175/70R14">175/70R14</option>
+        <option value="185/60R14">185/60R14</option>
+        <option value="185/65R14">185/65R14</option>
+        <option value="185/70R14">185/70R14</option>
+        <option value="185/75R14">185/75R14</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1" class="form-label"
+        >Description</label
+      >
+      <textarea
+        name="description"
+        class="form-control"
+        id="exampleFormControlTextarea1"
+        rows="4"
+      ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect4">Stock</label>
+      <select
+        class="form-control"
+        id="exampleFormControlSelect4"
+        name="stock"
+        required="required"
+      >
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="5">5</option>
+        <option value="9">9</option>
+        <option value="15">15</option>
+        <option value="32">32</option>
+        <option value="50">50</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="formGroupExampleprit">Price</label>
+      <input
+        name="price"
+        type="Number"
+        class="form-control"
+        id="formGroupExampleInputprice"
+        placeholder="Example input"
+        accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG"
+      />
+    </div>
+    <hr />
+    <div class="form-group mt-3">
+      <label class="mr-2">Upload the Images:</label>
+      <input type="file" name="productsImages" multiple />
+    </div>
+    <hr />
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>

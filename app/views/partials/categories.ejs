@@ -1,0 +1,19 @@
+<!-- Categories Section Begin -->
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories__slider owl-carousel">
+                <% category.forEach((cate)=>{%>
+                    <% if (cate.listed){ %>
+                <div style="width: 100%" class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="/productimages/<%= cate.images %>">
+                        <h5><a href="/shop/<%= cate._id %>" class="fw-bold" style="color: blueviolet ;"><%= cate.brand %></a></h5>
+                    </div>
+                </div>
+                <% } %>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->

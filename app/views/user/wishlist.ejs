@@ -1,0 +1,70 @@
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                
+
+                    <h1 class="pt-5 text-muted">WISHLIST</h1>
+                
+                <div class="shoping__cart__table">
+                    <% if(wishlistData.length <1){ %> 
+                        <div class="text-center ">
+                            <i class="bi bi-bag-heart h1 text-danger my-3 d-block"></i>
+                            <p class="text-secondary h3"> Your Wishlist is empty!</p>
+                            <a href="/" class="btn btn-dark btn-sm"><i class="bi bi-bag-plus"></i> Continue Shopping</a>
+                        </div>
+                        <% } %> 
+                    
+                    <table id="cartWish">
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">Products</th>
+                                <th>Price</th>
+                            
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody  >
+                            <% wishlistData.forEach((wish,i)=>{ %>
+                            <tr id="<%= wish._id %>cartWish">
+                                <td class="shoping__cart__item">
+                                    <img src="/productimages/<%= wish.image[0] %>" alt="" width="50px">
+                                    <h5>  <%= wish.brand.brand %> : Size of <%= wish.size %></h5>
+                                </td>
+                                <td class="shoping__cart__price">
+                                    &#8377; <%= wish.price %>
+                                </td>
+                                <td class="shoping__cart__total">
+                                    
+                                </td>
+                                <td class="shoping__cart__item__close">
+                                    <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                    <a class="primary-btn cart-btn cart-btn-right mx-auto"onclick="addToCartLoc('<%= wish._id %>','product-quanity')"><span class=""></span>
+                                        Add to Cart</a>
+                                    <span type="button" onclick="removeWishList('<%= wish._id %>');return false" id="<%= wish._id %>WishDltBtn">
+                                        <i class="fa fa-circle-xmark mx-2"></i>
+                                      </span>
+                                </td>
+                            </tr>
+            
+                            <% }) %>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a href="/" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<!-- Shoping Cart Section End -->

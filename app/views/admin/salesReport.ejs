@@ -1,0 +1,88 @@
+<style>
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #section-to-print,
+    #section-to-print * {
+      visibility: visible;
+    }
+    #section-to-print {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+</style>
+
+<div
+  id="adminRes"
+  style="position: fixed; top: 0; left: 0; right: 0; z-index: 9"
+></div>
+
+<div class="container bg-dark content-wrapper my-auto mx-auto">
+  <div class="d-flex justify-content-between border-bottom py-3 mb-2">
+    <h2 class="text-white p-0">
+      <i class="bi bi-bar-chart-line"></i> Sales Report
+    </h2>
+    <a
+      class="btn btn-dark btn-sm"
+      style="height: 30px"
+      onclick="window.print()"
+    >
+      <i class="bi bi-printer"></i>
+      Print
+    </a>
+  </div>
+  <div class="table-responsive" id="section-to-print">
+    <table id="myTable" class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Sr No.</th>
+          <th>Date</th>
+          <th>orderid</th>
+          <th>Customer</th>
+          <th>Items</th>
+          <th>Bill amount</th>
+          <th>Discount</th>
+          <th>Total bill</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% let finalTotal = 0; salesData.forEach((val,ind)=>{ let discount = 0;
+        let total = 0; if(val.coupen.discount>0){ if(val.coupen.ptype =='inr'){
+        discount = '&#8377;'+val.coupen.discount total =
+        Math.round(val.bill_amount-val.coupen.discount) }else
+        if(val.coupen.ptype =='percnt'){ discount = val.coupen.discount +
+        '&percnt;' total = Math.round((val.bill_amount*val.coupen.discount)/100)
+        } }else{ total = val.bill_amount; } finalTotal+=total %>
+
+        <tr>
+          <td><%= ind+1 %></td>
+          <td>
+            <%= val.ordered_date.getDate() %>/<%= val.ordered_date.getMonth()+1
+            %>/<%= val.ordered_date.getFullYear() %>
+          </td>
+          <td class="small"><%=val._id%></td>
+          <td>@<%=val.userid[0].name%></td>
+          <td><%=val.products.length%></td>
+          <td>&#8377;<%=val.bill_amount%></td>
+          <td><%-discount%></td>
+          <td>&#8377;<%-total%></td>
+        </tr>
+
+        <% })%>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>TOTAL :</td>
+          <td class="bolder text-success">&#8377;<%-finalTotal%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

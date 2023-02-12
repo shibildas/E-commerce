@@ -1,0 +1,61 @@
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Featured Product</h2>
+                    <% if (message.type) { %>
+
+                        <div
+                          class="alert alert-<%= message.type === 'success' ?'success' : 'danger' %>"
+                          role="alert"
+                        >
+                          <%= message.body %>
+                        </div>
+                        <% } %>
+                </div>
+                <div class="featured__controls">
+                    <ul>
+                        <li class="active" data-filter="*">All</li>
+                        <li data-filter=".MRF">MRF Tyres</li>
+                        <li data-filter=".Yokohoma">Yokohoma</li>
+                        <li data-filter=".CEAT">CEAT Tyres</li>
+                        <li data-filter=".JK">JK Tyres</li>
+                        <li data-filter=".Bridgestone">Bridgestone Tyres</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+            <div class="row featured__filter">
+                <% products.forEach((prod)=>{ %>
+                    <% if (prod.brand.listed){ %>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix <%= prod.brand.brand %>" >
+                    <div class="featured__item "style="height: auto">
+                        <div class="featured__item__pic set-bg" data-setbg="/productimages/<%= prod.image[0] %>">
+                            <ul class="featured__item__pic__hover">
+                                <input type="hidden" name="product-quanity" id="product-quanity" value='1'>
+                            <% if(user) { %>    <li><a class="" onclick="addToWishList('<%= prod._id %>');return false" id="<%= prod._id %>WishBtn"><i class="fa fa-heart"></i></a></li> <% } %>
+                                <li><a href="/productDetail/<%= prod._id %>"><i class="fa fa-retweet"></i></a></li>
+                                <li><a id="quanity1" onclick="addToCartLoc('<%= prod._id %>','product-quanity')"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a>
+                                    <%= prod.brand.brand %> with size <%= prod.size %>
+                                </a></h6>
+                            <h5>
+                                &#8377 <%= prod.price %>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<!-- Featured Section End -->
+
+

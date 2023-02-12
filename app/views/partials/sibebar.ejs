@@ -1,0 +1,125 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4 ">
+    <!-- Brand Logo -->
+    <a href="/admin/adminP" class="brand-link">
+      <img src="/images/cpu.svg" alt="" class="brand-image img-circle elevation-3" style="opacity: .8" width="50px">
+      <span class="brand-text font-weight-light">DrTyre Admin</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="/images/users.svg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="/admin/adminP" class="d-block"><% if(user){ %>
+            <%- user.name %>
+          <% } %>
+            </a>
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            <a href="/admin/adminP" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+                <i class="right fas fa-angle-right"></i>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/searchReport" class="nav-link">
+              <i class="nav-icon fa fa-balance-scale"></i>
+              <p>
+                Sales Report
+                <i class="fas fa-angle-right right"></i>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/addProducts" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Add products
+                <span class="right badge badge-danger">Add</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/viewUsers" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Manage Users
+                <i class="right fas fa-angle-right"></i>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/productList" class="nav-link">
+              <i class="nav-icon fas fa-box-open"></i>
+              <p>
+                Manage Products
+                <i class="fas fa-angle-right right"></i>
+              </p>
+            </a>
+          <li class="nav-item">
+            <a href="/admin/viewBrands" class="nav-link">
+              <i class="nav-icon fas fa-building"></i>
+              <p>
+                Manage Brands
+                <i class="fas fa-angle-right right"></i>
+              </p>
+            </a>
+          <li class="nav-item">
+            <a href="/admin/coupons" class="nav-link">
+              <i class="nav-icon fas fa-tags"> </i>
+              <p>
+                 View Coupons
+                <i class="fas fa-angle-right right"></i>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/orders" class="nav-link">
+              <i class="nav-icon fas fa-file"></i>
+              <p>
+                View orders
+                <i class="fas fa-angle-right right"></i>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/settings/banner" class="nav-link">
+              <i class="nav-icon fa fa-images"></i>
+              <p>
+                 Banners
+                <i class="fas fa-angle-right right"></i>
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

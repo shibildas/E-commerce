@@ -1,0 +1,517 @@
+
+<div class="content-wrapper">
+  <div class="container-fluid row mt-2 mx-auto">
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-info">
+        <div class="inner">
+          <h3><%= totalOrders %></h3>
+          <p>Total Orders</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-bag"></i>
+        </div>
+        <a href="/admin/orders" class="small-box-footer"
+          >More info <i class="fas fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-6">
+      <!-- ./col -->
+      <!-- small box -->
+      <div class="small-box bg-success">
+        <div class="inner">
+          <h3><%= bounce %><sup style="font-size: 20px">%</sup></h3>
+          <p>Bounce Rate</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-stats-bars"></i>
+        </div>
+        <a href="/admin/orders" class="small-box-footer"
+          >More info <i class="fas fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-warning">
+        <div class="inner">
+          <h3><%= totalUsers %></h3>
+          <p>User Registrations</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-person-add"></i>
+        </div>
+        <a href="/admin/viewUsers" class="small-box-footer"
+          >More info <i class="fas fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-danger">
+        <div class="inner">
+          <h3><%= cancelledOrders %></h3>
+          <p>Cancelled Orders</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-pie-graph"></i>
+        </div>
+        <a href="/admin/orders" class="small-box-footer"
+          >More info <i class="fas fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    <!-- ./col -->
+  </div>
+  <!-- /.row -->
+
+  <!-- AREA CHART -->
+  <div class="container-fluid row mx-auto my-auto">
+    <section class="col-lg-7 connectedSortable">
+      <!-- Custom tabs (Charts with tabs)-->
+      <div class="card card-secondary">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-chart-pie mr-1"></i>
+            Sales Graph
+          </h3>
+          <div class="card-tools">
+            <ul class="nav nav-pills ml-auto">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="#revenue-chart"
+                  data-toggle="tab"
+                  >Daily Count</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#sales-chart" data-toggle="tab"
+                  >Statistics</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <p class="text-center">
+          <strong>Sales: <%= weeklySales[0]._id %> - Today</strong>
+        </p>
+        <div class="card-body">
+          <div class="tab-content p-0">
+            <!-- Morris chart - Sales -->
+            <div
+              class="chart tab-pane active"
+              id="revenue-chart"
+              style="position: relative; height: 300px"
+            >
+              <canvas
+                id="revenue-chart-canvas"
+                height="300"
+                style="height: 300px"
+              ></canvas>
+            </div>
+            <p class="text-center">
+              <strong>Day v/s Count</strong>
+            </p>
+            <div
+              class="chart tab-pane"
+              id="sales-chart"
+              style="position: relative; height: 300px"
+            >
+              <canvas
+                id="sales-chart-canvas"
+                height="300"
+                style="height: 300px"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </section>
+    <!-- /.card -->
+
+    <!-- /.card -->
+
+    <!-- DONUT CHART -->
+    <div class="card card-success col-5">
+      <div class="card-header">
+        <h3 class="card-title">Product Brand Distribution</h3>
+        <div class="card-tools">
+          <button
+            type="button"
+            class="btn btn-tool"
+            data-card-widget="collapse"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <canvas
+          id="donutChart"
+          style="
+            min-height: 250px;
+            height: 250px;
+            max-height: 250px;
+            max-width: 100%;
+          "
+        ></canvas>
+      </div>
+      <!-- /.card-body -->
+    </div>
+  </div>
+  <!-- /.card -->
+
+  <div class="container-fluid row">
+    <!-- Left col -->
+    <section class="col-lg-8 connectedSortable">
+      <div class="ad-responsive-table">
+        <h3 class="text-White py-3">Latest Orders</h3>
+        <table
+          id="myTable"
+          class="table table-striped table-bordered table-hover"
+        >
+          <thead>
+            <tr>
+              <th>Sr No.</th>
+              <th>OID</th>
+              <th>User</th>
+              <th>Items</th>
+              <th>Ordered</th>
+              <th>Order Status</th>
+              <th>Payment Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% successOrders.forEach((val,i)=>{ %>
+
+            <tr>
+              <td><%= i+1 %></td>
+              <td class=""><%= val._id %></td>
+              <!--text-capitalize-->
+              <td>
+                @<%=val.userid.email%> <small>(<%=val.userid.name%>)</small>
+              </td>
+              <td><%=val.products.length%></td>
+              <td title="">
+                <%= val.ordered_date.getDate() %>/<%=
+                val.ordered_date.getMonth()+1 %>/<%=
+                val.ordered_date.getFullYear() %>
+              </td>
+              <td title="">
+                <% if(val.delivery_status.delivered.state){ %>
+                <p>
+                  <b>DELIVERED</b
+                  ><small
+                    >(<%= val.delivery_status.delivered.date.getDate() %>/<%=
+                    val.delivery_status.delivered.date.getMonth()+1 %>/<%=
+                    val.delivery_status.delivered.date.getFullYear() %>)</small
+                  >
+                </p>
+
+                <% }else if(val.delivery_status.out_for_delivery.state){ %>
+                <p>
+                  <b>OUT_FOR_DELIVERY</b
+                  ><small
+                    >(<%= val.delivery_status.out_for_delivery.date.getDate()
+                    %>/<%=
+                    val.delivery_status.out_for_delivery.date.getMonth()+1
+                    %>/<%=
+                    val.delivery_status.out_for_delivery.date.getFullYear()
+                    %>)</small
+                  >
+                </p>
+
+                <% }else if(val.delivery_status.shipped.state){ %>
+                <p>
+                  <b>SHIPPED</b
+                  ><small
+                    >(<%= val.delivery_status.shipped.date.getDate() %>/<%=
+                    val.delivery_status.shipped.date.getMonth()+1 %>/<%=
+                    val.delivery_status.shipped.date.getFullYear() %>)</small
+                  >
+                </p>
+
+                <% }else if(val.delivery_status.ordered.state){ %>
+                <p>
+                  <b>ORDERED</b
+                  ><small
+                    >(<%= val.delivery_status.ordered.date.getDate() %>/<%=
+                    val.delivery_status.ordered.date.getMonth()+1 %>/<%=
+                    val.delivery_status.ordered.date.getFullYear() %>)</small
+                  >
+                </p>
+
+                <% } %>
+              </td>
+              <td title="">
+                <% if( val.payment.payment_status == 'completed'){ %><span
+                  class="badge bg-success"
+                  >Paid</span
+                >
+                <% }else{ %><span class="badge bg-warning">Pending</span><% } %>
+              </td>
+              <td>
+                <a
+                  href="/admin/order/<%= val._id %>"
+                  class="btn text-success"
+                  title="View Order"
+                  ><i class="bi bi-eye-fill"></i
+                ></a>
+                <a
+                  href="/admin/invoice/<%= val._id %>"
+                  class="btn text-primary"
+                  title="View Order"
+                  ><i class="bi bi-receipt"></i
+                ></a>
+                <!-- <button  class="btn text-danger border-0" id="delete2<%=val._id %>" onclick="coupDelete( 'delete2<%=val._id %>','<%=val._id %>', 'icon')"><i class="bi bi-trash3-fill"></i></button> -->
+              </td>
+            </tr>
+            <%})%>
+          </tbody>
+        </table>
+      </div>
+      <a href="/admin/orders" class="text-white"
+        ><h6 class="text-White py-3">View More...</h6></a
+      >
+    </section>
+  </div>
+</div>
+<script src="/admin/plugins/chart.js/Chart.min.js"></script>
+<script>
+
+    //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas = $("#donutChart").get(0).getContext("2d");
+    var donutData = {
+      maintainAspectRatio: false,
+    responsive: true,
+      labels: [<% for (var j = 0; j < productData.length; j++) { %>
+                "<%= productData[j].brand %>" ,
+                <% } %>],
+      datasets: [
+        {
+          data: [<% for (var j = 0; j < productData.length; j++) { %>
+                "<%= productData[j].count %>" ,
+                <% } %>],
+          backgroundColor: [
+            "#f56954",
+            "#00a65a",
+            "#f39c12",
+            "#612040",
+            "#00c0ef",
+            "#fffb00",
+            "#3c8dbc",
+            "#455726",
+            "#d2d6de",
+            "#b326b5",
+            "#1a0c38",
+            "#f28fa4",
+            "#f7f7f2",
+            "#963700",
+            "#b7f054",
+            "#8303a3",
+            "#e87b0e",
+            "#c7448e",
+            "#780202",
+            "#6dd69e",
+
+
+
+
+          ],
+        },
+      ],
+    };
+    var donutOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+    };
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(donutChartCanvas, {
+      type: "doughnut",
+      data: donutData,
+      options: donutOptions,
+    });
+
+
+
+
+
+
+
+
+
+    $(function () {
+
+
+    /* Chart.js Charts */
+    // Sales chart
+    var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
+    // $('#revenue-chart').get(0).getContext('2d');
+
+
+    var salesChartData = {
+      options: {
+      title: {
+        display: true,
+        text: "Total Order's Report"
+      }
+    },
+      labels: [<% for (var i = 0; i < weeklySales.length; i++) { %>
+                "<%= weeklySales[i]._id %>",
+              <% } %>],
+      datasets: [
+        {
+          labels: 'Sale Count',
+          backgroundColor: '#1dc400',
+          borderColor: '#0a95cc',
+          pointRadius: false,
+          pointColor: '#3b8bba',
+          pointStrokeColor: 'rgba(60,141,188,1)',
+          pointHighlightFill: "#e80e36",
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data: [ <% for (var i = 0 ; i < weeklySales.length; i++) { %>
+                    <%= weeklySales[i].count %>,
+                  <% } %> ]
+        },
+
+      ]
+
+    }
+
+    var salesChartOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines: {
+            display: false
+          }
+        }],
+        yAxes: [{
+          gridLines: {
+            display: false
+          }
+        }]
+      }
+    }
+
+    // This will get the first returned node in the jQuery collection.
+    // eslint-disable-next-line no-unused-vars
+    var salesChart = new Chart(salesChartCanvas, { // lgtm[js/unused-local-variable]
+      type: 'line',
+      data: salesChartData,
+      options: salesChartOptions
+    })
+
+    // Donut Chart
+    var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
+    var pieData = {
+      labels: [
+        'Cancelled Orders',
+        'Delivered and Paid Orders',
+        'Delivery Pending Orders'
+      ],
+      datasets: [
+        {
+          data: [<%= cancelledOrders %>, <%= deliveredAndPaidOrders %>, <%= pendingDelivery %>],
+          backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+        }
+      ]
+    }
+    var pieOptions = {
+      legend: {
+        display: false
+      },
+      maintainAspectRatio: false,
+      responsive: true
+    }
+    // Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    // eslint-disable-next-line no-unused-vars
+    var pieChart = new Chart(pieChartCanvas, { // lgtm[js/unused-local-variable]
+      type: 'doughnut',
+      data: pieData,
+      options: pieOptions
+    })
+
+    // Sales graph chart
+    var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d')
+    // $('#revenue-chart').get(0).getContext('2d');
+
+    var salesGraphChartData = {
+      labels: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2', '2012 Q3', '2012 Q4', '2013 Q1', '2013 Q2'],
+      datasets: [
+        {
+          label: 'Digital Goods',
+          fill: false,
+          borderWidth: 2,
+          lineTension: 0,
+          spanGaps: true,
+          borderColor: '#efefef',
+          pointRadius: 3,
+          pointHoverRadius: 7,
+          pointColor: '#efefef',
+          pointBackgroundColor: '#efefef',
+          data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
+        }
+      ]
+    }
+
+    var salesGraphChartOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            fontColor: '#efefef'
+          },
+          gridLines: {
+            display: false,
+            color: '#efefef',
+            drawBorder: false
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            stepSize: 5000,
+            fontColor: '#efefef'
+          },
+          gridLines: {
+            display: true,
+            color: '#efefef',
+            drawBorder: false
+          }
+        }]
+      }
+    }
+
+    // This will get the first returned node in the jQuery collection.
+    // eslint-disable-next-line no-unused-vars
+    var salesGraphChart = new Chart(salesGraphChartCanvas, { // lgtm[js/unused-local-variable]
+      type: 'line',
+      data: salesGraphChartData,
+      options: salesGraphChartOptions
+    })
+  })
+</script>

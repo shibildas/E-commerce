@@ -1,0 +1,439 @@
+<div class="container content-wrapper mx-auto my-auto">
+  <div
+    id="banrResponse"
+    style="top: 0; left: 0; right: 0; z-index: 3; position: fixed"
+  ></div>
+  <div class="container bg-secondary my-2">
+    <div class="d-flex justify-content-between py-1 mb-0">
+      <h2 class="text-white p-0">Banner Design</h2>
+      <a class="btn btn-dark btn-sm" style="height: 30px" onclick="newData()">
+        <i class="bi bi-plus-square-fill"></i>
+        Add Banner
+      </a>
+    </div>
+  </div>
+
+  <div class="container bg-secondary my-2">
+    <div class="col-12 my-1 p-0">
+      <div class="card w-100 border-0 ad-box-shadow p-0">
+        <div class="card-header">BANNERS</div>
+        <div class="card-body table-responsive">
+          <% if(bannerList.length <1){ %>
+          <div class="text-center">
+            <i class="bi bi-door-closed h1"></i>
+            <p class="text-secondary fw-bolder">No Data Found!</p>
+          </div>
+          <% }else{ %>
+
+          <table class="table table-striped table-info">
+            <thead>
+              <tr class="text-body">
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Heading 1</th>
+                <th scope="col">Heading 2</th>
+                <th scope="col">Description</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% bannerList.forEach((val,i)=>{ %>
+              <tr>
+                <th scope="row" class="text-body"><%= i+1 %></th>
+                <td>
+                  <img
+                    src="/uploads/banner/<%= val.image %>"
+                    alt=""
+                    style="max-width: 100px"
+                  />
+                </td>
+                <td>
+                  <p class="h3" style="color: <%= val.tc %>"><%= val.bh1 %></p>
+                </td>
+                <td>
+                  <p class="h4" style="color: <%= val.tc %>"><%= val.bh2 %></p>
+                </td>
+                <td><p style="color: <%= val.tc %>"><%= val.para %></p></td>
+                <td>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    onclick="getData('<%= val._id %>')"
+                  >
+                    EDIT
+                  </button>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="bannerUpdateModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bannerHeaderLabel">Loading..</h5>
+        <small id="bannerLoader"></small>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div id="bannerResponse"></div>
+        <form
+          action="/admin/settings/banner/update"
+          method="post"
+          class=""
+          novalidate=""
+          onsubmit="submitData('banner'); return false;"
+          autocomplete="off"
+          enctype="multipart/form-data"
+          id="bannerForm"
+        >
+          <input type="file" name="banrImg" id="imageInput" class="d-none" />
+          <div class="border">
+            <label for="imageInput" class="d-block">
+              <div
+                id="image_drop_area"
+                class="d-flex justify-content-center align-items-center mx-auto col-md-10 my-1 text-muted"
+                style="
+                  min-height: 225px;
+                  border: 1px dashed rgba(57, 57, 57, 0.766);
+                "
+                onclick="document.getElementById('image_drop_area').innerHTML=`<p class=''>Drag and Drop Image here</p>`"
+              >
+                <p class="text-muted">Drag and Drop Image here</p>
+              </div>
+              <p id="file_name"></p>
+            </label>
+          </div>
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="catname">Header1</label>
+            <input
+              id="bannerh1"
+              type="text"
+              class="form-control"
+              name="bh1"
+              value=""
+              required
+              autofocus
+            />
+          </div>
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="catname">Header2</label>
+            <input
+              id="bannerh2"
+              type="text"
+              class="form-control"
+              name="bh2"
+              value=""
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="catname">Message</label>
+            <textarea
+              name="para"
+              id="para"
+              cols="30"
+              rows="10"
+              class="form-control"
+            ></textarea>
+          </div>
+          <div class="d-flex w-100">
+            <div class="mb-3 col-6">
+              <label class="mb-2 text-muted" for="catname">Text color</label>
+              <input
+                id="bannertc"
+                type="color"
+                class="form-control"
+                name="tc"
+                value=""
+                required
+              />
+            </div>
+            <div class="mb-3 col-6">
+              <label class="mb-2 text-muted" for="catname"
+                >Background color</label
+              >
+              <input
+                id="bannerbc"
+                type="color"
+                class="form-control"
+                name="bc"
+                value=""
+                required
+              />
+            </div>
+          </div>
+
+          <input type="hidden" name="action" value="" id="bannerAction" />
+          <input type="hidden" name="id" value="noData" id="bannerid" />
+
+          <div class="align-items-center d-flex">
+            <div id="bnrbuttons">
+              <button
+                class="btn btn-sm btn-danger"
+                type="button"
+                id="bannerDeleteBtn"
+                onclick="deleteAsk()"
+              >
+                Delete
+              </button>
+            </div>
+            <button type="submit" class="btn btn-primary mx-2" id="bannerBtn">
+              Loading..
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form
+  action="/admin/banner/delete/"
+  method="post"
+  onsubmit="DltBanner('banner','bannerDelete'); return false;"
+  id="bannerDeleteForm"
+  class="d-none mx-auto"
+>
+  <input type="hidden" name="dltid" id="bannerid2" value="noData" />
+</form>
+<script>
+  $(document).ready(function () {
+    $("#myTable").dataTable();
+  });
+
+  function newData() {
+    $("#bnrbuttons").hide();
+    toggleModal("bannerUpdateModal", "show");
+    $("#bannerHeaderLabel").html("New Banner");
+    $("#bannerLoader").html("");
+    $("#bannerResponse").html("");
+    $("#bannerBtn").html("Create");
+    $("#bannerAction").val("create");
+    $("#bannerForm")[0].reset();
+    $("#image_drop_area").html(
+      `<p class="text-muted">Drag and Drop Image here</p>`
+    );
+  }
+
+  function deleteAsk() {
+    Swal.fire({
+      title: "Do you want to delete the banner?",
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $("#bannerDeleteForm").submit();
+      }
+    });
+  }
+  function getData(id) {
+    $("#bannerResponse").html("");
+    $("#bnrbuttons").show();
+    $("#bannerLoader").html('<span class="badge bg-primary">Loading..</span>');
+    $("#bannerHeaderLabel").html("Update Banner");
+    $("#bannerBtn").html("Update");
+    $("#bannerAction").val("update");
+    toggleModal("bannerUpdateModal", "show");
+    $.ajax({
+      type: "GET",
+      url: "/admin/banner/get/" + id,
+      data: {},
+      dataType: "json",
+      encode: true,
+    }).done(function (data) {
+      $("#bannerLoader").html("");
+
+      console.log(data.message);
+      if (data.success == true) {
+        $("#image_drop_area").html(
+          `<img src="/uploads/banner/${data.data.image}" alt="" style="max-width:400px;">`
+        );
+        $("#bannerid").val(data.data._id);
+        $("#bannerid2").val(data.data._id);
+        $("#bannerh1").val(data.data.bh1);
+        $("#bannerh2").val(data.data.bh2);
+        $("#para").val(data.data.para);
+        $("#bannerbc").val(data.data.bc);
+        $("#bannertc").val(data.data.tc);
+      } else {
+        $("#bannerLoader").html(
+          '<span class="badge bg-danger">Error detucted</span>'
+        );
+        resHTML =
+          '<div class="alert alert-danger alert-dismissible"> ' +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+          "<strong>Error!</strong> " +
+          data.message +
+          "</div>";
+        $("#banrResponse").html(resHTML);
+      }
+    });
+  }
+  function submitData(id) {
+    console.log("llllllllllllllllllllll");
+
+    let btn_data;
+    let url;
+
+    btn_data = $("#" + id + "Btn").html();
+    $("#" + id + "Btn")
+      .html("Loading...")
+      .prop("disabled", true);
+    url = $("#" + id + "Form").attr("action");
+
+    var form = $("#bannerForm")[0]; // You need to use standard javascript object here
+    var formData = new FormData(form);
+    //data: $('#categoryForm').serialize(),
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: formData,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      encode: true,
+    }).done(function (data) {
+      console.log(data.message);
+      if (data.success == true) {
+        resHTML =
+          '<div class="alert alert-success alert-dismissible"> ' +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+          "<strong>Success!</strong> " +
+          data.message +
+          "</div>";
+        $("#" + id + "Form")[0].reset();
+        setTimeout(() => {
+          toggleModal("bannerUpdateModal", "hide");
+        }, 1500);
+      } else {
+        resHTML =
+          '<div class="alert alert-danger alert-dismissible"> ' +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+          "<strong>Error!</strong> " +
+          data.message +
+          "</div>";
+      }
+
+      $("#" + id + "Btn")
+        .html(btn_data)
+        .prop("disabled", false);
+      $("#" + id + "Response").html(resHTML);
+    });
+
+    event.preventDefault();
+  }
+
+  function DltBanner(id, data) {
+    btn_data = $("#" + data + "Btn").html();
+    $("#" + data + "Btn")
+      .html("Loading...")
+      .prop("disabled", true);
+    url = $("#" + data + "Form").attr("action");
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: $("#" + data + "Form").serialize(),
+      dataType: "json",
+      encode: true,
+    }).done(function (data) {
+      console.log(data.message);
+      if (data.success == true) {
+        resHTML =
+          '<div class="alert alert-success alert-dismissible"> ' +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+          "<strong>Success!</strong> " +
+          data.message +
+          "</div>";
+        $("#" + id + "Form")[0].reset();
+        setTimeout(() => {
+          toggleModal("bannerUpdateModal", "hide");
+        }, 1500);
+      } else {
+        resHTML =
+          '<div class="alert alert-danger alert-dismissible"> ' +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+          "<strong>Error!</strong> " +
+          data.message +
+          "</div>";
+      }
+
+      $("#" + id + "Btn")
+        .html(btn_data)
+        .prop("disabled", false);
+      $("#" + id + "Response").html(resHTML);
+    });
+  }
+
+  function imageDrop() {
+    const image_drop_area = document.querySelector("#image_drop_area");
+    var uploaded_image;
+
+    // Event listener for dragging the image over the div
+    image_drop_area.addEventListener("dragover", (event) => {
+      image_drop_area.classList.add("bg-secondary");
+      image_drop_area.classList.add("text-white");
+      image_drop_area.classList.remove("text-muted");
+
+      event.stopPropagation();
+      event.preventDefault();
+      // Style the drag-and-drop as a "copy file" operation.
+      event.dataTransfer.dropEffect = "copy";
+    });
+    image_drop_area.addEventListener("dragleave", (event) => {
+      image_drop_area.classList.remove("bg-secondary");
+      image_drop_area.classList.remove("text-white");
+      image_drop_area.classList.add("text-muted");
+    });
+
+    // Event listener for dropping the image inside the div
+    image_drop_area.addEventListener("drop", (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+
+      fileList = event.dataTransfer.files;
+
+      document.querySelector("#file_name").textContent = fileList[0].name;
+      document.querySelector("#imageInput").files = fileList;
+
+      readImage(fileList[0]);
+      image_drop_area.classList.remove("bg-secondary");
+      image_drop_area.classList.remove("text-white");
+      image_drop_area.classList.add("text-muted");
+    });
+
+    // Converts the image into a data URI
+    readImage = (file) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", (event) => {
+        uploaded_image = event.target.result;
+        image_drop_area.style.border = "none";
+        image_drop_area.innerHTML = `<img src="${uploaded_image}" class="" alt="" >`;
+      });
+      reader.readAsDataURL(file);
+    };
+  }
+  imageDrop();
+</script>

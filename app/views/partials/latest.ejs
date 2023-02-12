@@ -1,0 +1,129 @@
+<!-- Latest Product Section Begin -->
+<section class="latest-product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Latest Products</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <% products.forEach((prod)=>{ %>
+                            <% if (prod.brand.listed){ %>
+                        <div class="latest-prdouct__slider__item">
+                            <a href="/productDetail/<%= prod._id %>" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="/productimages/<%= prod.image[0] %>" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6><%= prod.brand.brand %> with size <%= prod.size %></h6>
+                                    <span>&#8377 <%= prod.price %></span>
+                                </div>
+                            </a>
+                            <a href="/productDetail/<%= prod._id %>" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="/productimages/<%= prod.image[1] %>" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6><%= prod.brand.brand %> with size <%= prod.size %></h6>
+                                    <span>&#8377 <%= prod.price %></span>
+                                </div>
+                            </a>
+                            <a href="/productDetail/<%= prod._id %>" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="/productimages/<%= prod.image[2] %>" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6><%= prod.brand.brand %> with size <%= prod.size %></h6>
+                                    <span>&#8377 <%= prod.price %></span>
+                                </div>
+                            </a>
+                        </div>
+                        <% } %>
+                        <% }) %>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Top Rated Products</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <% products.forEach((prod)=>{ %>
+                            <% if (prod.brand.listed){ %>
+                        <div class="latest-prdouct__slider__item">
+                            <a href="/productDetail/<%= prod._id %>" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="/productimages/<%= prod.image[0] %>" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6><%= prod.brand.brand %> with size <%= prod.size %></h6>
+                                    <span>&#8377 <%= prod.price %></span>
+                                </div>
+                            </a>
+                            <a href="/productDetail/<%= prod._id %>" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="/productimages/<%= prod.image[1] %>" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6><%= prod.brand.brand %> with size <%= prod.size %></h6>
+                                    <span>&#8377 <%= prod.price %></span>
+                                </div>
+                            </a>
+                            <a href="/productDetail/<%= prod._id %>" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="/productimages/<%= prod.image[2] %>" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6><%= prod.brand.brand %> with size <%= prod.size %></h6>
+                                    <span>&#8377 <%= prod.price %></span>
+                                </div>
+                            </a>
+                        </div>
+                        <% } %>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Review Products</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <% products.forEach((prod)=>{ %>
+                            <% if (prod.brand.listed){ %>
+                            <div class="latest-prdouct__slider__item">
+                                <a href="/productDetail/<%= prod._id %>" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="/productimages/<%= prod.image[0] %>" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6><%= prod.brand.brand %> with size <%= prod.size %></h6>
+                                        <span>&#8377 <%= prod.price %></span>
+                                    </div>
+                                </a>
+                                <a href="/productDetail/<%= prod._id %>" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="/productimages/<%= prod.image[1] %>" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6><%= prod.brand.brand %> with size <%= prod.size %></h6>
+                                        <span>&#8377 <%= prod.price %></span>
+                                    </div>
+                                </a>
+                                <a href="/productDetail/<%= prod._id %>" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="/productimages/<%= prod.image[2] %>" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6><%= prod.brand.brand %> with size <%= prod.size %></h6>
+                                        <span>&#8377 <%= prod.price %></span>
+                                    </div>
+                                </a>
+                            </div>
+                          <% } %>  
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Latest Product Section End -->

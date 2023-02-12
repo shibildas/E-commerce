@@ -1,0 +1,176 @@
+ 
+ 
+ <!-- Hero Section Begin -->
+ <section class="hero mt-3">
+  <div class="container ">
+      <div class="row">
+          <div class="col-lg-3">
+              <div class="hero__categories">
+                  
+                      
+              </div>
+          </div>
+          <div class="col-lg-9">
+              <div class="hero__search">
+                  <div class="hero__search__form">
+                      <form id='' >
+                          
+                          <input type="button bg-white" id="input-field" placeholder="What do yo u need?" data-bs-toggle="modal" data-bs-target="#adSearchBar">
+                          <button type="submit" class="site-btn">SEARCH</button>
+                      </form>
+                  </div>
+                  
+              </div>
+              
+          </div>
+        </div>
+      </div>
+          
+      </div>
+  </div>
+</section>
+<!-- Hero Section End -->
+<!-- Featured Section Begin -->
+
+<section class="featured spad">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="section-title">
+                <% if(products.length!==0){ %>
+                  <h2>Shop Page</h2>
+                  <% if (message.type) { %>
+
+                      <div
+                        class="alert alert-<%= message.type === 'success' ?'success' : 'danger' %>"
+                        role="alert"
+                      >
+                        <%= message.body %>
+                      </div>
+                      <% } %>
+              </div>
+              <div class="featured__controls">
+                  <ul>
+                      <li class="active" data-filter="*">All</li>
+                      <li data-filter=".MRF">MRF Tyres</li>
+                      <li data-filter=".Yokohoma">Yokohoma</li>
+                      <li data-filter=".CEAT">CEAT Tyres</li>
+                      <li data-filter=".JK">JK Tyres</li>
+                      <li data-filter=".Bridgestone">Bridgestone Tyres</li>
+                      
+                  </ul>
+              </div>
+          </div>
+      </div>
+          <div class="row featured__filter">
+              <% products.forEach((prod)=>{ %>
+                  <% if (prod.brand.listed){ %>
+              <div class="col-lg-3 col-md-4 col-sm-6 mix <%= prod.brand.brand %>" >
+                  <div class="featured__item "style="height: auto">
+                      <div class="featured__item__pic set-bg" data-setbg="/productimages/<%= prod.image[0] %>">
+                          <ul class="featured__item__pic__hover">
+                              <input type="hidden" name="product-quanity" id="product-quanity" value='1'>
+                          <% if(user) { %>    <li><a class="" onclick="addToWishList('<%= prod._id %>');return false" id="<%= prod._id %>WishBtn"><i class="fa fa-heart"></i></a></li> <% } %>
+                              <li><a href="/productDetail/<%= prod._id %>"><i class="fa fa-retweet"></i></a></li>
+                              <li><a id="quanity1" onclick="addToCartLoc('<%= prod._id %>','product-quanity')"><i class="fa fa-shopping-cart"></i></a></li>
+                          </ul>
+                      </div>
+                      <div class="featured__item__text">
+                          <h6><a>
+                                  <%= prod.brand.brand %> with size <%= prod.size %>
+                              </a></h6>
+                          <h5>
+                              &#8377 <%= prod.price %>
+                          </h5>
+                      </div>
+                  </div>
+              </div>
+            <% } %>
+          <% }) %>
+          <% }else{ %>
+
+
+<h3>Sorry, No Result Found !!!</h3>
+
+
+          <% } %>
+      </div>
+  </div>
+  <!-- Modal -->
+  
+  
+  <div class="modal fade bg-white" id="adSearchBar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+  
+    <div class="modal-dialog modal-lg" role="document">
+  
+      <div class="w-100 pt-1 mb-5 ">
+        <a class="navbar-brand " href="/">
+            <h1 class=" mb-5"><span style="color: rgb(136, 4, 224);">Dr.</span>Tyre <span class="Timehead"><i class="bi bi-align-bottom"></i></span></h1>
+        </a>
+          <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-content modal-body border-0 p">
+        <form id="formsearch" method="get">
+          <div class="input-group mb-0">
+            <input type="text" class="form-control " id="inputModalSearch" name="search"
+                              placeholder="Search" onkeyup='searchFun(this.value)'>
+            <button type="submit" class="input-group-text text-light" style="background-color: rgb(136, 4, 224);"> 
+                              <i class="fa fa-fw fa-search text-white"></i>
+            </button>
+          </div>
+        </form>
+  
+  
+  
+      <div class="border w-100 rounded-3" id="searchResult">
+                      Search result
+  
+    </div>
+  </div> 
+</section>
+
+<script>
+
+  function searchFun(value) {
+      document.getElementById("formsearch").setAttribute('action', '/shop?search=' + value + '')
+      $.ajax({
+          type: "POST",
+          url: "/search",
+          data: { value },
+          dataType: "json",
+          encode: true,
+      }).done(function (data) {
+
+          //   
+          if (data == 'noresult') {
+              resHTML = '<h6 class="text-secondary ">NO RESULT</h6>'
+              $("#searchResult").html(resHTML)
+          } else {
+              $("#searchResult").html('')
+              resHTML = ''
+              data.search.forEach(function (val) {
+                if (val.type == 'product') {
+                      resHTML += '<a href="/productDetail/' + val.id + '"><h6 class="text-dark ms-2 ">'+ val.cate +' of Size' + val.titile + ' </h6></a>'
+                    }else{
+                  resHTML += '<a href="/productDetail/' + val.id + '"><h6 class="text-dark ms-2 ">'+ val.cate +' of Size' + val.titile + ' </h6></a>'
+
+                }
+              });
+              $("#searchResult").append(resHTML)
+          }
+      });
+  }
+  $(document).ready(function(){
+  $("#input-field").click(function(){
+    $("#adSearchBar").css("display", "block");
+  });
+  
+  $(".close").click(function(){
+    $("#adSearchBar").css("display", "none");
+  });
+});
+
+</script>
+
+

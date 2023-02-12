@@ -1,0 +1,79 @@
+    <!-- Header Section Begin -->
+
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-envelope"></i> drtyre@outlook.com</li>
+                                <li>Free Shipping for all Order above <i class="fa-solid fa-indian-rupee-sign"></i>4999</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a ><i class="fa-brands fa-facebook"></i></a>
+                                <a><i class="fa-brands fa-twitter"></i></a>
+                                <a ><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a ><i class="fa-brands fa-pinterest"></i></a>
+                            </div>
+                            <div class="header__top__right__language">
+                                <i class="fa-sharp fa-solid fa-language"></i>
+                                <div>English</div>
+                                <span class="arrow_carrot-down"></span>
+                                <ul class="text-white">
+                                    <li><a>Hindi</a></li>
+                                    <li><a>English</a></li>
+                                </ul>
+                            </div>
+                            <div class="header__top__right__auth">
+                                <a href="/admin"><i class="fa fa-user"></i> Admin</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="images/logo.jpg" width="150px" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="active"><a href="/">Home</a></li>
+                            <li><a href="/shop">Shop</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="/">Shop Details</a></li>
+                                    <li><a href="/cart">Shoping Cart</a></li>
+                                    <li><a href="/cart">Check Out</a></li>
+                                    <li><a href="/blog-details">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/blog">Blog</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                           <% if(user){ %> <li><a href="/wishList"><i class="fa fa-heart"></i> <span><%= user.wishlist? user.wishlist.length : "" %></span></a></li> <% } %>
+                            <li><a href="/cart"><i class="fa fa-shopping-bag"></i><span><%= user? user.cart.length :"" %> </span></a></li>
+                        </ul>
+                        <div class="header__cart__price"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
