@@ -28,6 +28,7 @@
     "gitignore": "^0.7.0",
     "http-errors": "^2.0.0",
     "joi": "^17.7.0",
+    "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.13.0",
     "mongoose": "^6.8.2",
     "mongoose-unique-validator": "^3.1.0",
