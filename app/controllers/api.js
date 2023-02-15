@@ -468,12 +468,9 @@ if(req.body.wishid){
   }
 },
 listWishList:async(req,res)=>{
-//   let wishlistData = await User.aggregate([{$match:{_id:res.locals.user._id}},{$lookup:{from: 'products', localField:'wishlist', foreignField:'_id', as:'wishData'}}
-//   ,{$lookup:{from: 'categories', localField:'wishData.brand', foreignField:'_id', as:'brandData'}},
 
-// ])
 await User.aggregate([
-{ $match: { _id: res.locals.user._id } },
+{ $match: { _id: res.locals.user._id , wishlist: { $exists: true }} },
 { $lookup: {
 from: 'products',
 localField: 'wishlist',
@@ -494,7 +491,12 @@ wishlist: { $push: '$wishlist' }
 }}
 ]).exec()
 .then(user => {
- return wishlistData =(user[0].wishlist)
+    if(user.length!=0){
+
+        return wishlistData =(user[0].wishlist)
+    }else{
+        return wishlistData = [] 
+    }
 })
 .catch(error => {
   console.log(error)
@@ -502,11 +504,6 @@ wishlist: { $push: '$wishlist' }
 })
 
 res.render('user/wishlist', {pageName: 'Wishlist | Dashboard',dashPage:'wishlist', login:res.locals.login, user:res.locals.user,wishlistData,layout:'../views/layouts/layout'})
-// let wishlistData = await User.find({_id:res.locals.user._id}).populate('wishlist').populate('wishlist.brand')
-
-// wishlistData = wishlistData[0];
-
-// console.log(wishlistData);
 },
 addToLoc: async (req,res,next)=>{
 
@@ -580,7 +577,7 @@ try {
             if(res.locals.user){
                 User.updateOne({_id:res.locals.user._id},{$set:{cart:dataToUpload}}).then((data)=>{
                     apiRes.message = 'Cart updated!'
-                    console.log('Cart updated!');
+                   
                     // console.log(data);
                 }).catch((err)=>{
                     apiRes.message = 'Internal server error! but updated to client area cart!'
@@ -1105,13 +1102,10 @@ salesReport:async (req, res, next) => {
         },
         { $sort: { ordered_date: -1 } },
       ]);
-      console.log(res.locals.user);
+      console.log(salesData);
       res.render("admin/salesReport", {
-        page: "report",
-        pageName: "Sales Report",
-        userData: res.locals.user,
-        pages: ["report", "sales"],
-        salesData,layout:'../views/layouts/admin'
+        salesData,
+        layout:'../views/layouts/admin'
       });
     } catch (error) {
       console.log(error);

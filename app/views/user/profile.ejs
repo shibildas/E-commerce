@@ -26,12 +26,11 @@
                 
                 <div class="col-md-6">
                     <form action="/api/updateuserdata" method="post" onsubmit="sendData('emailUpdate'); return false" id="emailUpdateForm">
-                        <div  class="form-text text-muted">You can always change your Email, we don't spam you </div>
+                        <div  class="form-text text-muted">You can't change your Email </div>
                         <div class="d-flex mb-3">
                             <div class="input-group mb-0 input-group-sm">
-                                <input type="email" class="form-control" placeholder="Email" name="email" id="emailUpdate" aria-label="email"  aria-describedby="basic-addon1" value="<%= user.email %>" onchange="$('#emailUpdateBtn').prop('disabled',false)">
+                                <input type="email" class="form-control" placeholder="Email" name="email" id="emailUpdate" aria-label="email"  aria-describedby="basic-addon1" value="<%= user.email %>" disabled>
                               </div>
-                              <button class="btn btn-sm btn-success mx-2" id="emailUpdateBtn" disabled>Save</button>
                         </div>
                     </form>
                 </div>

@@ -49,19 +49,29 @@
         </tr>
       </thead>
       <tbody>
-        <% let finalTotal = 0; salesData.forEach((val,ind)=>{ let discount = 0;
-        let total = 0; if(val.coupen.discount>0){ if(val.coupen.ptype =='inr'){
-        discount = '&#8377;'+val.coupen.discount total =
-        Math.round(val.bill_amount-val.coupen.discount) }else
-        if(val.coupen.ptype =='percnt'){ discount = val.coupen.discount +
-        '&percnt;' total = Math.round((val.bill_amount*val.coupen.discount)/100)
-        } }else{ total = val.bill_amount; } finalTotal+=total %>
+        <% let finalTotal = 0;
+               salesData.forEach((val,ind)=>{ 
+                let discount = 0;
+                let total = 0;
+                if(val.coupen.discount>0){
+                  if(val.coupen.ptype =='inr'){
+                     discount = '&#8377;'+val.coupen.discount
+                     total = Math.round(val.bill_amount-val.coupen.discount)
+                  }else if(val.coupen.ptype =='percnt'){
+                     discount = '&percnt;'+val.coupen.discount
+                     total = Math.round((val.bill_amount*val.coupen.discount)/100)
+                  }
+                }else{
+                    total = val.bill_amount;
+                }
+                finalTotal+=total
+                %>
+
 
         <tr>
           <td><%= ind+1 %></td>
           <td>
-            <%= val.ordered_date.getDate() %>/<%= val.ordered_date.getMonth()+1
-            %>/<%= val.ordered_date.getFullYear() %>
+            <%= val.ordered_date.getDate() %>/<%= val.ordered_date.getMonth()+1 %>/<%= val.ordered_date.getFullYear() %>
           </td>
           <td class="small"><%=val._id%></td>
           <td>@<%=val.userid[0].name%></td>

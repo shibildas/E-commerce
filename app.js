@@ -1,5 +1,5 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();}
+
+require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const logger = require("morgan");
@@ -47,11 +47,6 @@ app.locals.errors = {}; // Form validation errors
 
 app.use(express.static("public"));
 app.use(logger("dev"));
-
-// app.locals.title = 'Dr.Tyre'
-
-// app.set('trust proxy', 1) // trust first proxy
-//Routes
 
 app.use("/", indexRouter);
 app.use("/admin", adminRouter);

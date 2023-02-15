@@ -72,13 +72,11 @@ router.post("/settings/banner/update",uploads.single("banrImg") ,api.updateBanne
 //View invoice induvidually
 router.get("/invoice/:oid",adminAuthMiddleware ,adminHelper.viewInvoice)
 //sales Report Search
-router.get("/searchReport",api.searchReport)
+router.get("/searchReport",adminAuthMiddleware,api.searchReport)
 //Sales Report as Per Date Input
 router.post("/report/sales",api.salesReport)
 //change order status Range helper
 router.get("/getTextBubble",adminHelper.getRange)
-//Calender
-router.get('/calendar',adminAuthMiddleware ,adminHelper.calender)
 //Admin Logout
 router.get("/logout", adminAuthMiddleware,adminLogin.adminLogout );
 

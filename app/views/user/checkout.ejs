@@ -354,13 +354,13 @@
         }
 
         $(document).ready(function(){
-    var walletAmount = parseFloat($('#walletbalance3').html());
-    var totalAmount = parseFloat($('#cartTotal3').html());
-    
-    $('#flexSwitchCheckDefault').on('change', function(){
-        getCheckoutData()
-        var check = $(this).is(':checked');
-        setTimeout(() => {
+            
+            $('#flexSwitchCheckDefault').on('change', function(){
+                getCheckoutData()
+                var check = $(this).is(':checked');
+                setTimeout(() => {
+            var walletAmount = parseFloat($('#walletbalance3').html());
+            var totalAmount = parseFloat($('#cartTotal3').html());
             
         
         if(check){

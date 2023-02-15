@@ -4,11 +4,14 @@ const returnMiddleware = (req,res,next) => {
             return next()   
         }
 
-    } else if(req.session.passport.user.role == "Customer"){
-        res.redirect('/')
-    }else if(req.session.passport.user.role == "Admin"){
+    } 
+    else if(req.session.passport.user.role == "Admin"){
     res.redirect('/admin/adminP')
-}res.redirect('/admin/adminP')
+    }
+    else if(req.session.passport.user.role == "Customer"){
+        res.redirect('/')
+    }
+res.redirect('/')
 }
 
 module.exports = returnMiddleware

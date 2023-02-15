@@ -26,18 +26,14 @@ router.post("/search", api.searchTool );
 router.get("/register",guestMiddleware,flasherMiddleware,userRegister.registerForm );
 //Post Reg Form
 router.post("/register", guestMiddleware, userRegister.register);
-
-
-router.get("/reset", guestMiddleware, (req,res)=>{
-    res.render("user/reset")
-});
-
+//reset password page
+router.get("/reset", guestMiddleware,userRegister.getReset );
+//post submitting mailid for resetting
 router.post("/resetPassword",userRegister.resetPassword)
-
-router.get("/forgotpassword/:id/:token",userRegister.getResetLink)
-
+//reset link route from mail
+router.get("/forgotpassword/:id/:token",guestMiddleware,userRegister.getResetLink)
+//post password reset
 router.post("/updatePassword/:id/:token",userRegister.updatePassword)
-
 //OTP Page
 router.get("/OTP",guestMiddleware, flasherMiddleware,userRegister.fillOTP );
 //Post OTP Page

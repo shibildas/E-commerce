@@ -15,7 +15,7 @@
                             <p class="text-secondary h3"> Your Wishlist is empty!</p>
                             <a href="/" class="btn btn-dark btn-sm"><i class="bi bi-bag-plus"></i> Continue Shopping</a>
                         </div>
-                        <% } %> 
+                        <% }else{ %> 
                     
                     <table id="cartWish">
                         <thead>
@@ -42,15 +42,19 @@
                                 </td>
                                 <td class="shoping__cart__item__close">
                                     <input type="hidden" name="product-quanity" id="product-quanity" value="1">
-                                    <a class="primary-btn cart-btn cart-btn-right mx-auto"onclick="addToCartLoc('<%= wish._id %>','product-quanity')"><span class=""></span>
-                                        Add to Cart</a>
-                                    <span type="button" onclick="removeWishList('<%= wish._id %>');return false" id="<%= wish._id %>WishDltBtn">
-                                        <i class="fa fa-circle-xmark mx-2"></i>
-                                      </span>
+                                    <a type="button" class="btn btn-outline-success mx-auto my-auto p-3"onclick="addToCartLoc('<%= wish._id %>','product-quanity')"><span class=""></span>
+                                        <i class="bi bi-cart-check-fill mx-3 my-1"></i> </a>
+                                      
+                                </td>
+                                <td class="shoping__cart__item__close">
+                                        <a type="button" class="btn btn-outline-danger mx-auto my-auto p-3" onclick="removeWishList('<%= wish._id %>');return false" id="<%= wish._id %>WishDltBtn">
+                                        <i class="bi bi-x-circle-fill mx-3 my-1"></i>
+                                          </a>
                                 </td>
                             </tr>
             
                             <% }) %>
+                            <% } %>
                             
                         </tbody>
                     </table>

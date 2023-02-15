@@ -228,9 +228,6 @@ module.exports = {
   addbrandForm: (req, res) => {
     res.render("admin/addBrands", { layout: "../views/layouts/admin" });
   },
-  calender: (req, res) => {
-    res.render("admin/calender", { layout: "../views/layouts/admin" });
-  },
   coupons: async (req, res) => {
     let couplist = await coupons.find({}).populate("last_updated_user");
     // console.log(couplist);

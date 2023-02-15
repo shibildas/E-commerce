@@ -1,5 +1,5 @@
  <!-- Hero Section Begin -->
- <section class="hero">
+<section` class="hero">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -8,123 +8,111 @@
                         <i class="fa-sharp fa-solid fa-chevrons-down"></i>
                         <span>All Brands</span>
                     </div>
-                    <ul>
+                        <ul>
                         <% category.forEach((cate)=>{%>
                         <li><a href="/shop/<%= cate._id %>"><%= cate.brand %></a></li>
                         <% }) %>
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="hero__search">
-                    <div class="hero__search__form">
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
                         <form action="#">
                             
                             <input type="button bg-white" placeholder="What do yo u need?" data-bs-toggle="modal" data-bs-target="#adSearchBar">
-                            <button type="submit" class="site-btn">SEARCH</button>
+                            <button type="submit" class="site-btn"><i class="bi bi-search"></i>  SEARCH</button>
                         </form>
-                    </div>
-                    <div class="hero__search__phone">
-                        <div class="hero__search__phone__icon">
-                            <i class="fa fa-phone"></i>
                         </div>
-                        <div class="hero__search__phone__text">
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
                             <h5>+91 9987644332</h5>
                             <span>support 24/7 time</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
 
 
 
                 <!-- Start Banner Hero -->
-    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-            <% bannerList.forEach((val,i)=>{ %> 
-            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="<%=i %>" class="<% if(i == 0){ %>active <% } %>"></li>
-            <% }) %>
-            <!-- <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
-            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li> -->
-        </ol>
-        <div class="carousel-inner" >
-            <% bannerList.forEach((val,i)=>{ %> 
-            <div class="carousel-item <% if(i == 0){ %>active <% } %> " style="background-color: <%=val.bc %>;">
-                <div class="container">
-                    <div class="row p-5">
-                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="/uploads/banner/<%= val.image %>" alt="bnr">
-                        </div>
-                        <div class="col-lg-6 mb-0 d-flex align-items-center">
-                            <div class="text-align-left align-self-center hero__text">
+                    <div id="template-mo-zay-hero-carousel" class="carousel slide mb-3" data-bs-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <% bannerList.forEach((val,i)=>{ %> 
+                            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="<%=i %>" class="<% if(i == 0){ %>active <% } %>"></li>
+                            <% }) %>
+                            <!-- <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+                            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li> -->
+                        </ol>
+                        <div class="carousel-inner" >
+                            <% bannerList.forEach((val,i)=>{ %> 
+                            <div class="carousel-item <% if(i == 0){ %>active <% } %> " style="background-color: <%=val.bc %>;">
+                                <div class="container">
+                                    <div class="row p-5">
+                                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                            <img class="img-fluid" src="/uploads/banner/<%= val.image %>" alt="bnr">
+                                        </div>
+                                    <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                <div class="text-align-left align-self-center hero__text">
                                 <h2 class="h1 text-success"><%-val.bh1 %> </h2>
                                 <h3 class="h2" style="color: <%-val.tc %>;"><%-val.bh2 %></h3>
                                 <p style="color: <%-val.tc %>;">
                                     <%-val.para %>
                                 </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                    <% }) %> 
             </div>
-            <% }) %> 
+                <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+                <i class="fas fa-chevron-left"></i>
+                </a>
+                <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+                <i class="fas fa-chevron-right"></i>
+                </a>
         </div>
-        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
-            <i class="fas fa-chevron-left"></i>
-        </a>
-        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
-            <i class="fas fa-chevron-right"></i>
-        </a>
-    </div>
 
     <!-- End Banner Hero -->
-
-
-
-
-
-                <!-- <div class="hero__item set-bg" data-setbg="/images/header/herobanner.jpg">
-                    <div class="hero__text">
-                        <span>BEST PRICE</span>
-                        <h2> Brand New Tyres <br />100% Road Comfort</h2>
-                        <p>Free Delivery Available</p>
-                        <a href="#" class="primary-btn">SHOP NOW</a>
-                    </div>
-                </div> -->
-            </div>
-        </div>
+           
     </div>
      <!-- Modal -->
   
-  
-  <div class="modal fade bg-white" id="adSearchBar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+</section> 
+<div class="modal fade bg-white" id="adSearchBar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
 
-<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document">
 
-<div class="w-100 pt-1 mb-5 ">
-<a class="navbar-brand " href="/">
-    <h1 class=" mb-5"><span style="color: rgb(136, 4, 224);">Dr.</span>Tyre <span class="Timehead"><i class="bi bi-align-bottom"></i></span></h1>
-</a>
-  <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-content modal-body border-0 p">
-<form id="formsearch" method="get">
-  <div class="input-group mb-0">
-    <input type="text" class="form-control " id="inputModalSearch" name="search"
+        <div class="w-100 pt-1 mb-5 ">
+            <a class="navbar-brand " href="/">
+            <h1 class=" mb-5"><span style="color: rgb(136, 4, 224);">Dr.</span>Tyre <span class="Timehead"><i class="bi bi-align-bottom"></i></span></h1>
+            </a>
+            <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-content modal-body border-0 p">
+            <form id="formsearch" method="get">
+                <div class="input-group mb-0">
+                    <input type="text" class="form-control " id="inputModalSearch" name="search"
                       placeholder="Search" onkeyup='searchFun(this.value)'>
-    <button type="submit" class="input-group-text text-light" style="background-color: rgb(136, 4, 224);">
-                      <i class="fa fa-fw fa-search text-white"></i>
-    </button>
-  </div>
-</form>
+                        <button type="submit" class="input-group-text text-light" style="background-color: rgb(136, 4, 224);">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                        </button>
+                </div>
+            </form>
 
 
 
-<div class="border w-100 rounded-3" id="searchResult">
+            <div class="border w-100 rounded-3" id="searchResult">
               Search result
 
-</div>
+            </div>
+        </div>
+    </div>
 </div> 
-</section>
+
 <!-- Hero Section End -->

@@ -112,7 +112,7 @@ fillOTP:async (req, res, next) => {
       );
   
       const subject = "Dr.Tyre Email for Password Reset";
-      const text = `This link is valid for 5 minutes: http://localhost:8081/forgotpassword/${userD._id}/${token}`;
+      const text = `This link is valid for 5 minutes: https://www.drtyre.co/forgotpassword/${userD._id}/${token}`;
       try {
         // code to send email
         await sendEmail(email,subject,text)
@@ -263,6 +263,9 @@ updatePassword:async(req,res)=>{
 
     })
   }
+},
+getReset:(req,res)=>{
+  res.render("user/reset")
 }
   
 }
