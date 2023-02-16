@@ -28,7 +28,16 @@ verifyOTP:async (req, res) => {
             const validOTP = await bcrypt.compare(otp, hashedOTP);
   
             if (!validOTP) {
-              throw new Error("Invalid, check your inbox");
+              res.status(400).render("user/OTP", {
+                message: {
+                  type: "error",
+                  body: "Invalid Entry!!!",
+                },
+              
+                formData: req.body,
+        
+             
+              })
             } else {
               await User.updateOne(
                 { _id: req.session.userid },
@@ -45,10 +54,14 @@ verifyOTP:async (req, res) => {
       }
     } catch (error) {
       console.log(error);
-      res.json({
-        status: "error",
-        message: `error.message`,
-      });
+      res.status(400).render("user/OTP", {
+        message: {
+          type: "error",
+          body: "Invalid Entry!!!",
+        },
+        formData: req.body,
+
+      })
     }
   },
 resendOTP: async(req,res,next)=>{
