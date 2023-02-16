@@ -22,16 +22,16 @@
     }
   }
 </style>
-<% 
-let status,invDate; 
-if(orderData.delivery_status.delivered.state){ 
-  status='Delivered'; 
-  invDate= orderData.delivery_status.out_for_delivery.date;
- }else{
-status= 'Pending'; 
-invDate= orderData.delivery_status.ordered.date;
- }
-  %>
+<%
+let status,invDate;
+if(orderData.delivery_status.delivered.state){
+    status= 'Delivered';
+    invDate= orderData.delivery_status.out_for_delivery.date;
+}else{
+    status= 'Pending';
+    invDate= orderData.delivery_status.ordered.date;
+}
+%>
 <div
   id="prodResponse"
   style="top: 0; left: 0; right: 0; z-index: 3; position: fixed"

@@ -1,15 +1,14 @@
 <% 
-let stsRange = 1; 
+let stsRange = 1;
 if(orderData.delivery_status.delivered.state){ 
-  stsRange = 4
-}else if(orderData.delivery_status.out_for_delivery.state){ 
-  stsRange = 3 
-}else if(orderData.delivery_status.shipped.state){ 
-  stsRange = 2 
-}else if(orderData.delivery_status.ordered.state){ 
-  stsRange = 1 
-} 
-%>
+    stsRange = 4
+}else if(orderData.delivery_status.out_for_delivery.state){
+    stsRange = 3
+ }else if(orderData.delivery_status.shipped.state){  
+    stsRange = 2
+}else if(orderData.delivery_status.ordered.state){  
+    stsRange = 1
+} %> 
 
 <div class="content-wrapper container">
   <div id="prodResponse"></div>
