@@ -562,8 +562,6 @@ module.exports = {
     }
   },
   getRange: function (req, res) {
-    // console.log("query: " + req.query);
-
     const value = req.query.value;
     res.send(textOptions[value - 1]);
   },

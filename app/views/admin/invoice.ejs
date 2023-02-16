@@ -22,16 +22,15 @@
     }
   }
 </style>
-<%
+<% 
 let status,invDate;
-if(orderData.delivery_status.delivered.state){
-    status= 'Delivered';
-    invDate= orderData.delivery_status.out_for_delivery.date;
+ if(orderData.delivery_status.delivered.state){ 
+  status='Delivered';
+  invDate= orderData.delivery_status.out_for_delivery.date; 
 }else{
-    status= 'Pending';
-    invDate= orderData.delivery_status.ordered.date;
-}
-%>
+  status= 'Pending';
+  invDate= orderData.delivery_status.ordered.date;
+ } %>
 <div
   id="prodResponse"
   style="top: 0; left: 0; right: 0; z-index: 3; position: fixed"
@@ -65,13 +64,11 @@ if(orderData.delivery_status.delivered.state){
             <h5 class="mb-0">Delivery Address</h5>
             <p>
               Name: <b><%= orderData.address.name %></b>, <br />
-              Address:
-              <b
-                ><%= orderData.address.house %>, <%= orderData.address.post %>,
-                <%= orderData.address.city %>, <%= orderData.address.district
-                %>, <%= orderData.address.state %>,</b
-              >
-              <br />
+              Address:<b><%= orderData.address.house %>,
+                 <%= orderData.address.post %>,
+                 <%= orderData.address.city %>,
+                 <%= orderData.address.district %>, 
+                 <%= orderData.address.state %>,</b><br />
               pin: <b><%= orderData.address.pin %></b> <br />
               Contact: <b><%= orderData.userid.mobile%></b>
             </p>
@@ -122,12 +119,16 @@ if(orderData.delivery_status.delivered.state){
         <div class="d-flex mt-auto">
           <div
             class="ms-auto col-12 col-md-4 table-responsive"
-            id="billAmountDetails"
-          >
-            <% let totalBill if(orderData.coupen.ptype=='inr'){ totalBill =
-            orderData.bill_amount-orderData.coupen.discount }else{ totalBill =
-            orderData.bill_amount-((orderData.bill_amount*orderData.coupen.discount)/100)
-            } %>
+            id="billAmountDetails">
+            <% 
+            let totalBill 
+            if(orderData.coupen.ptype=='inr'){
+               totalBill =orderData.bill_amount-orderData.coupen.discount 
+              }else{
+                totalBill =orderData.bill_amount-((orderData.bill_amount*orderData.coupen.discount)/100)
+            } 
+            
+            %>
             <table class="table table-striped">
               <tr>
                 <td>Sub-total</td>
