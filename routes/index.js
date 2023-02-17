@@ -39,7 +39,7 @@ router.get("/OTP",guestMiddleware, flasherMiddleware,userRegister.fillOTP );
 //Post OTP Page
 router.post("/OTP",flasherMiddleware, userOTP.verifyOTP);
 //Resend OTP
-router.get("/resendOTP",flasherMiddleware, userOTP.resendOTP);
+router.post("/resend-otp",flasherMiddleware, userOTP.resendOTP);
 //Login Page
 router.get("/login" ,guestMiddleware,flasherMiddleware,userLogin.loginPage);
 //Post Login Authentication

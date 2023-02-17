@@ -25,6 +25,7 @@ const user = new User(userInput);
         await sendEmail(mailid,subject,text);
       } catch (error) {
         console.log(error);
+        throw new Error("Error adding user");
       }
     }
     sendOTPVerificationEmail(result);

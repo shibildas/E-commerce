@@ -1,7 +1,6 @@
 const { addUser } = require("./userControl");
 const {registerSchema} = require("./validation/authValidation");
-const {joiErrorFormatter,mongooseErrorFormatter,
-} = require("../../config/validationFormatter");
+const {joiErrorFormatter,mongooseErrorFormatter} = require("../../config/validationFormatter");
 const sendEmail = require("../helpers/eMailer");
 const User = require("../models/User");
 const jwt = require('jsonwebtoken');
@@ -25,7 +24,6 @@ register:async (req, res, next) => {
   
           errors: joiErrorFormatter(validationResult.error),
           formData: req.body,
-        // return res.send(joiErrorFormatter( validationResult.error))
         
       }
       return res.redirect("/register");
@@ -41,22 +39,19 @@ register:async (req, res, next) => {
         formData: req.body,
       };
       req.session.userid = user._id.toString();
-      return res.redirect("/OTP");
+      return res.render("user/OTP",{formData: req.body});
     } catch (e) {
-      
-      return res.status(400).render("register", {
+      return res.status(400).render("user/register", {
         message: {
           type: "error",
-          body: "Email Already Exists, Login!!!",
+          body: "Email Already Exists, Login!!! or Something went Wrong",
         },
       
         errors: mongooseErrorFormatter(e),
         formData: req.body,
 
-      // return res.send(mongooseErrorFormatter(e))
+    
       });
-  
-      // return res.status(400).render('register', {message: 'Something Went Wrong!!!'})
     }
     
   },

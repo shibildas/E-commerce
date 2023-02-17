@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const UserOTPVerification = require("../models/UserOTPVerification");
+const sendEmail = require('../helpers/eMailer')
 
 
 module.exports={
@@ -64,19 +65,45 @@ verifyOTP:async (req, res) => {
       })
     }
   },
-resendOTP: async(req,res,next)=>{
-    try {
-      let{userId, email} = req.body
-      if(!userId || email){
-        throw error("Empty details are not allowed")
-
-      }else{
-        await UserOTPVerification.deleteMany({userId})
-        send.sendOTPVerificationEmail({_id: userId,email},res)
-      }
-      
-    } catch (error) {
-      next(error);
+resendOTP:async (req, res) => {
+  
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      throw new Error('User not found');
     }
+
+    // Generate a new OTP and update the OTP verification record
+    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    const saltRounds = 10;
+    const hashedOTP = await bcrypt.hash(otp, saltRounds);
+    const expiresAt = Date.now() + 3600000;
+    await UserOTPVerification.updateOne({ userId: user._id }, { otp: hashedOTP, expiresAt });
+
+    // Send the email with the new OTP
+    const mailid = user.email;
+    const subject = 'Verify your Email';
+    const text = `<p>Enter <b> ${otp}</b> to verify your Account</p>`;
+    await sendEmail(mailid, subject, text);
+
+    // Set a flash message to indicate that the OTP has been resent
+    req.session.flashData = {
+      message: {
+        type: 'success',
+        body: 'OTP has been resent'
+      }
+    };
+
+    res.redirect('/OTP');
+  } catch (error) {
+    console.error(error);
+    req.session.flashData = {
+      message: {
+        type: 'error',
+        body: 'An error occurred while resending the OTP'
+      }
+    };
+    res.redirect('/OTP');
   }
+} 
 }

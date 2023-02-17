@@ -1,14 +1,14 @@
  <!-- Hero Section Begin -->
-<section` class="hero">
+<section class="hero ">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-                <div class="hero__categories">
+                <div class="hero__categories mt-3">
                     <div class="hero__categories__all">
                         <i class="fa-sharp fa-solid fa-chevrons-down"></i>
                         <span>All Brands</span>
                     </div>
-                        <ul>
+                        <ul class="hero__categories__list">
                         <% category.forEach((cate)=>{%>
                         <li><a href="/shop/<%= cate._id %>"><%= cate.brand %></a></li>
                         <% }) %>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    <div class="hero__search">
+                    <div class="hero__search flex-container">
                         <div class="hero__search__form">
                         <form action="#">
                             
@@ -24,7 +24,7 @@
                             <button type="submit" class="site-btn"><i class="bi bi-search"></i>  SEARCH</button>
                         </form>
                         </div>
-                        <div class="hero__search__phone">
+                        <div class="hero__search__phone d-none d-lg-block">
                             <div class="hero__search__phone__icon">
                             <i class="fa fa-phone"></i>
                             </div>
@@ -114,5 +114,6 @@
         </div>
     </div>
 </div> 
+
 
 <!-- Hero Section End -->

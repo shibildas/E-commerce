@@ -39,6 +39,12 @@
             </div>
   
           </form>
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <form method="POST" action="/resend-otp">
+              <input type="hidden" name="email" value='<%= formData.email %>'>
+              <button type="submit" class="btn btn-info btn-lg" style="padding-left: 1.5rem; padding-right: 1.5rem;">Resend OTP</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

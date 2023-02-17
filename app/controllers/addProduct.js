@@ -133,7 +133,7 @@ module.exports = {
   viewHome: async (req, res) => {
     // console.log(req.session);
     let bannerList = await banners.find()
-    let products = await Product.find().populate("brand");
+    let products = await Product.find().populate("brand").limit(20);
     let category = await Category.find();
     res.render("user/index", {
       layout: "../views/layouts/layout",
