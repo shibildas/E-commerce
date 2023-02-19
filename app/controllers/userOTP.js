@@ -48,7 +48,10 @@ verifyOTP:async (req, res) => {
                 userId: req.session.userid,
               });
               req.session.destroy();
-              res.redirect("/login");
+              res.status(200).render("user/login",{message: {
+                type: 'success',
+                body: 'Registration Successfull, You can Login Now'
+              }});
             }
           }
         }
