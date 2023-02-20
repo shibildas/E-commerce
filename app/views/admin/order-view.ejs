@@ -35,12 +35,6 @@ if(orderData.delivery_status.delivered.state){
             <div id="textBubble" class="text-warning bolder"></div>
             <input type="hidden" name="id" value="<%= orderData._id %>" />
             <input type="range" class="form-range" min="1" max="4" step="1" id="customRange3" value="<%= stsRange %>" name="sts" onchange="showButtonAndTextBubble(this.value)" <% if(orderData.delivery_status.cancelled.state){ %> disabled<% } %> > 
-            <div class="d-flex justify-content-between">
-              <!-- <p id="p1">Ordered</p>
-                        <p>Shipped</p>
-                        <p>Out For Delivery</p>
-                        <p>Delivered</p> -->
-            </div>
             <button
               class="btn btn-sm btn-primary w-100"
               id="stsRangeUpdateBtn"
@@ -152,6 +146,25 @@ if(orderData.delivery_status.delivered.state){
         </div>
       </div>
       <% } %>
+      <% if(!orderData.delivery_status.cancelled.state && !orderData.delivery_status.delivered.state) {%> 
+        <div class="card ">
+            <div class="card-body">
+                
+                <div class="border p-2">
+                    <h5 class="text-warning border-bottom py-2 mb-2">Cancel? </h5>
+                    <div class="border p-2">
+                        <div class="alert alert-warning" style="display: none;"  id="<%= orderData._id %>clickinfo"  >Cancelling items in this order may cause you to lose your promotional offers and/or cashback on this order.</div>
+                        <p>You will not able to revert it back once cancelled.</p>
+                        <button class="btn btn-sm btn-outline-danger" onclick="sendData('<%= orderData._id %>',true)" id="<%= orderData._id %>Btn">Cancel</button>
+                        <form action="" method="post" id="<%= orderData._id %>Form"><input type="hidden" name="id" value="<%= orderData._id %>" ></form>
+                        <p class="text-danger" id="<%= orderData._id %>clickALert" ></p>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    <% } %>  
     </div>
 
     <div class="col-11 col-md-7 my-1 p-0">
@@ -281,9 +294,6 @@ if(orderData.delivery_status.delivered.state){
 </div>
 
 <script>
-  // $(document).ready(function () {
-  //     $('#myTable').dataTable();
-  // });
 
   function confirmPaid() {
     Swal.fire({
@@ -358,5 +368,60 @@ if(orderData.delivery_status.delivered.state){
         },
       });
     }, 300);
+    
   }
+  
+var uclicks = 0;
+  function sendData(id,ask){
+if(ask){
+    let requiredClick = 3
+    let count = uclicks-requiredClick;
+    setTimeout(()=>{
+        $('#'+id+'clickALert').html('')
+        uclicks=0
+    },3000)
+    if(uclicks==requiredClick){
+        
+        if (confirm("Confirming that you are sure to do this action, To confirm it just click OK") != true) {
+            $('#'+id+'Btns').html('<p class="text-danger">Oops! You have cancelled the action! </p>')
+            return false;
+        }
+    }else{
+        $('#'+id+'clickALert').html('Click '+count+' more times')
+        $('#'+id+'clickinfo').show()
+        if(uclicks<=3){
+            uclicks++;
+        }
+        return false;
+    }
+   
+}
+    let btnData = $('#'+id+'Btn').html();
+    $('#'+id+'Btn').html('Updating..').prop('disabled', true);
+    console.log($("#"+id+'Form').serialize());
+    $.ajax({
+        type: "POST",
+        url: "/api/orderCancel",
+        data: $("#"+id+'Form').serialize(),
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        alert(data.message);
+        if(data.success == true){
+            
+            resHTML = '<div class="alert alert-success alert-dismissible"> '+
+                '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>'+
+                '<strong>Success!</strong> '+data.message +
+                '</div>';
+            }else{
+                
+         resHTML = '<div class="alert alert-danger alert-dismissible"> '+
+            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>'+
+            '<strong>Error!</strong> '+data.message +
+            '</div>';
+        }
+        $('#'+id+'Btn').html(btnData).prop('disabled', true);
+        $("#dashResponse").html(resHTML)
+    });
+}
 </script>

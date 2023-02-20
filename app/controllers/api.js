@@ -708,7 +708,6 @@ cancelOrders: async (req, res) => {
     apiRes.message = "Invalid payment or something went wrong!";
     apiRes.status = 200;
     apiRes.success = false;
-    // console.log(req.body);
     if (req.body.id) {
       let orderData = await orders.findOne({
         _id: req.body.id,
@@ -741,7 +740,6 @@ cancelOrders: async (req, res) => {
                     { $inc: { wallet: walbal } }
                     );
                 }
-
         }
         orders
           .updateOne(
