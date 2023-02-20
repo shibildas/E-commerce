@@ -398,7 +398,6 @@ if(ask){
 }
     let btnData = $('#'+id+'Btn').html();
     $('#'+id+'Btn').html('Updating..').prop('disabled', true);
-    console.log($("#"+id+'Form').serialize());
     $.ajax({
         type: "POST",
         url: "/api/orderCancel",

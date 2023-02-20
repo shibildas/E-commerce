@@ -14,7 +14,6 @@ const FILE_TYPE_MAP = {
       if(isValid){
         uploadError = null
       }
-      console.log("INSIDE MULTER");
       cb(uploadError, './public/productimages')
     },
     filename: function (req, file, cb) {

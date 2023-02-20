@@ -377,7 +377,7 @@ module.exports = {
         successOrders,
       });
     } catch (error) {
-     console.log(error); 
+     next(error); 
     }
   },
 
@@ -397,8 +397,7 @@ module.exports = {
         layout: "../views/layouts/admin",
       });
     } catch (error) {
-      console.log(error);
-      next(createError(404));
+      next(error);
     }
   },
   orderStatus: (req, res) => {
@@ -557,7 +556,6 @@ module.exports = {
         layout: "../views/layouts/admin",
       });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   },

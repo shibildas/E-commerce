@@ -13,7 +13,6 @@ login:async  (req, res, next) => {
    
     passport.authenticate('local',(err, user, info) => {
       if (err) {
-        console.log(err);
         console.error("Err:", err);
         req.session.flashData = {
           message: {
@@ -25,7 +24,6 @@ login:async  (req, res, next) => {
       }
   
       if (!user) {
-        console.log(info.error);
         req.session.flashData = {
           message: {
             type: "error",
@@ -37,7 +35,6 @@ login:async  (req, res, next) => {
   
       req.logIn(user, (err) => {
         if (err) {
-          console.log(err);
           console.error("Err:", err);
           req.session.flashData = {
             message: {

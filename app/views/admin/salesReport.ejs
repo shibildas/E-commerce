@@ -59,7 +59,7 @@
                      total = Math.round(val.bill_amount-val.coupen.discount)
                   }else if(val.coupen.ptype =='percnt'){
                      discount = '&percnt;'+val.coupen.discount
-                     total = Math.round((val.bill_amount*val.coupen.discount)/100)
+                     total = Math.round(val.bill_amount-((val.bill_amount*val.coupen.discount)/100))
                   }
                 }else{
                     total = val.bill_amount;

@@ -6,7 +6,6 @@ module.exports = {
     productImage:(req, res, next) => {
         uploadOptions(req, res, (error) => {
           if (error) {
-            console.log(error);
             req.session.flashData = {
               message: {
                 type: "error",
@@ -21,7 +20,6 @@ module.exports = {
       BrandImage:(req, res, next) => {
         uploadLogo(req, res, (error) => {
           if (error) {
-            console.log(error);
             req.session.flashData = {
               message: {
                 type: "error",
@@ -36,7 +34,6 @@ module.exports = {
       updateProduct:(req, res, next) => {
         uploadOptions(req, res, (error) => {
           if (error) {
-            console.log(error);
             req.session.flashData = {
               message: {
                 type: "error",

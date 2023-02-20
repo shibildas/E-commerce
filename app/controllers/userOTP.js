@@ -57,7 +57,6 @@ verifyOTP:async (req, res) => {
         }
       }
     } catch (error) {
-      console.log(error);
       res.status(400).render("user/OTP", {
         message: {
           type: "error",
@@ -99,7 +98,6 @@ resendOTP:async (req, res) => {
 
     res.redirect('/OTP');
   } catch (error) {
-    console.error(error);
     req.session.flashData = {
       message: {
         type: 'error',

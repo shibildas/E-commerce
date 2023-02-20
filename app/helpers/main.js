@@ -23,7 +23,6 @@ module.exports = {
             const newFileName = prefix+this.randomGen(15)+path.extname(req.file.originalname).toLowerCase();
             const targetPath = path.join(__dirname, "../../public/uploads/"+toDir+"/"+newFileName);
             const ext = path.extname(req.file.originalname).toLowerCase();
-            console.log('temp path :'+tempPath);
             if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif') {
                 
                 if(crop){
@@ -32,7 +31,6 @@ module.exports = {
                         if (err) {
                             dataToReturn.error = err;
                             reject(new Error('Internal server error detucted!'));
-                            console.log(err);
                         }
                         // this.deleteFile(tempPath) //NOT WORKING :)
                     }
@@ -41,7 +39,6 @@ module.exports = {
                         if (err) {
                             dataToReturn.error = err;
                             reject(new Error('Internal server error detucted!'));
-                            console.log(err);
                         } 
                     });
                 }
@@ -51,7 +48,6 @@ module.exports = {
             } else {
                 fs.unlinkSync(tempPath, err => {
                     if (err) {
-                        console.log(err);
                         reject( new Error('Internal server error detucted!'));
                     }
                 });

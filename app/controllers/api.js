@@ -96,7 +96,6 @@ updateAddress:async function(req, res) {
                 apiRes.success = true;
                 apiRes.message = 'Address added successfully!';
             }).catch((err)=>{
-                console.log(err);
                 apiRes.message = "Internal error detucted, try again later..."
             }).then(()=>{
                 res.status(apiRes.status).json(apiRes)
@@ -109,7 +108,6 @@ updateAddress:async function(req, res) {
                     apiRes.success = true;
                     apiRes.message = 'Address updated successfully!';
                 }).catch((err)=>{
-                    console.log(err);
                     apiRes.message = "Internal error detucted, try again later..."
                 }).then(()=>{
                     res.status(apiRes.status).json(apiRes)
@@ -124,11 +122,9 @@ updateAddress:async function(req, res) {
         if(req.body.id){
             User.updateOne({_id:res.locals.user._id},{$pull:{address:{_id:req.body.id}}})
             .then((data)=>{
-                // console.log(data);
                 apiRes.success = true;
                 apiRes.message = 'Address Deleted successfully!';
             }).catch((err)=>{
-                console.log(err);
                 apiRes.message = "Internal error detucted, try again later..."
             }).then(()=>{
                 res.status(apiRes.status).json(apiRes)
@@ -188,19 +184,17 @@ checkOutGetData:(req,res)=>{
             if(order){
                 User.findOne({_id: res.locals.user._id}).then((user)=> {
                     apiRes.data = { order, user }
-                    // console.log(apiRes.data);
                     apiRes.message = 'Successfully verified user and served data!';
                     apiRes.success = true
                     res.status(apiRes.status).json(apiRes)
                 }).catch((err) => {
-                    console.log(err);
+                    res.status(apiRes.status).json(apiRes)
                 });
             }else{
                 apiRes.message = 'Verification error!';
                 res.status(apiRes.status).json(apiRes)
             }
         }).catch((err)=>{
-            console.log(err);
             res.status(apiRes.status).json(apiRes)
         })
     }else{
@@ -215,8 +209,6 @@ codApprove:async(req,res)=>{
     apiRes.success = false
     var wal= (0 - parseInt(req.body.walletUsed))
     var paid = parseInt(req.body.paid)
-    // console.log(paid);
-    // console.log(wal);
     if(req.body.id){
         
 
@@ -233,7 +225,7 @@ codApprove:async(req,res)=>{
                 apiRes.success = true;
             }).catch((err)=>{
                 apiRes.message = 'Internal error detucted, try again later!';
-                console.log(err);
+
             }).finally(()=>{
                 res.status(apiRes.status).json(apiRes) 
             })
@@ -245,7 +237,6 @@ codApprove:async(req,res)=>{
                 apiRes.success = true;
             }).catch((err)=>{
                 apiRes.message = 'Internal error detucted, try again later!';
-                console.log(err);
             }).finally(()=>{
                 res.status(apiRes.status).json(apiRes) 
             })
@@ -278,7 +269,6 @@ onlineApprove:async(req,res)=>{
                 await User.updateOne({_id:res.locals.user._id},{$inc:{ wallet: wal },$set:{cart:[]}})
             }).catch((err)=>{
                 apiRes.message = 'Internal error detucted, try again later!';
-                console.log(err);
             }).finally(()=>{
                 res.status(apiRes.status).json(apiRes) 
             })
@@ -293,7 +283,6 @@ onlineApprove:async(req,res)=>{
     }
 },
 checkoutGenerateId: async (req,res,next)=>{
-    // console.log("generateid");
     let apiRes = JSON.parse(JSON.stringify(apiResponse));
     apiRes.message = 'No result found!';
     apiRes.status = 200;
@@ -310,7 +299,6 @@ checkoutGenerateId: async (req,res,next)=>{
             
             if(cartData){
                 let productlist = await Product.aggregate([{$match:{_id:{$in:cartIdArr}}},{$lookup:{from:"categories",localField:"brand",foreignField:"_id", as:'prodBrand'}},{$unwind:"$prodBrand"}])
-                // console.log(productlist);
                 if(productlist){
                     cartProducts=productlist.map((val,i)=>{
   
@@ -348,7 +336,6 @@ checkoutGenerateId: async (req,res,next)=>{
                             id:data._id
                         };
                     }).catch((err)=>{
-                        console.log(err);
                         apiRes.message = 'Add Address to Profile Before Checkout'
                     }).then(()=>{
                         res.status(apiRes.status).json(apiRes)
@@ -373,7 +360,6 @@ checkoutGenerateId: async (req,res,next)=>{
         }
         
     } catch (error) {
-        console.log(error);
         apiRes.message = 'Internal Error!'
         res.status(apiRes.status).json(apiRes)
     }
@@ -407,7 +393,6 @@ updateUserAddress:(req,res)=>{
                 apiRes.message = 'Updated Address!';
                 apiRes.success= true
             }).catch((err)=>{
-                console.log(err);
                 apiRes.message = 'Internal Error detected!';
             }).then(()=>{
                 res.status(apiRes.status).json(apiRes)
@@ -499,7 +484,6 @@ wishlist: { $push: '$wishlist' }
     }
 })
 .catch(error => {
-  console.log(error)
   return wishlistData = []
 })
 
@@ -581,7 +565,6 @@ try {
                     // console.log(data);
                 }).catch((err)=>{
                     apiRes.message = 'Internal server error! but updated to client area cart!'
-                    console.log(err);
                 })
             }
         }else{
@@ -592,7 +575,6 @@ try {
     }
     
 } catch (error) {
-    console.log(error);
     apiRes.message = 'Internal Error!'
 }finally{
     res.status(apiRes.status).json(apiRes)
@@ -648,7 +630,6 @@ try {
   })
   res.render('user/cart', {pageName: 'Cart',prodData,layout:'../views/layouts/layout'})
 } catch (err) {
-  console.log(err);
   
   next(err)
 }
@@ -671,7 +652,7 @@ try {
   userCoupons =  await coupons.find({ used_users: { $ne: user }, expire: { $gte: new Date() }});
   
 } catch (error) {
-    console.log(error);
+    next(error);
 }finally{
     // console.log(userCheckout);
     // console.log(userCoupons);
@@ -758,7 +739,6 @@ cancelOrders: async (req, res) => {
           })
           .catch((err) => {
             apiRes.message = "Internal error detucted, try again later!";
-            console.log(err);
           })
           .finally(() => {
             res.status(apiRes.status).json(apiRes);
@@ -811,7 +791,6 @@ updateuserdata:async (req,res)=>{
             apiRes.success = true;
     
             }).catch((err)=>{
-                console.log(err);
                 if(err.code==11000){
                     if(err.keyPattern.mobile){
                         apiRes.message='Mobile # '+ err.keyValue.phone + " already exists!"
@@ -860,7 +839,6 @@ setCoupon:(req,res)=>{
                                 apiRes.message = 'Applied discount to your bill!';
                                 apiRes.success = true
                             }).catch((err)=>{
-                                console.log(err);
                                 apiRes.message = 'Error while applying coupon!';
                             }).then(()=>{
                                  res.status(apiRes.status).json(apiRes)
@@ -877,7 +855,6 @@ setCoupon:(req,res)=>{
                                 apiRes.message = 'Applied discount to your bill!';
                                 apiRes.success = true
                             }).catch((err)=>{
-                                console.log(err);
                                 apiRes.message = 'Error while applying coupon!';
                             }).then(()=>{
                                  res.status(apiRes.status).json(apiRes)
@@ -888,7 +865,6 @@ setCoupon:(req,res)=>{
                             res.status(apiRes.status).json(apiRes)
                         }
                     }).catch((err)=>{
-                        console.log(err);
                         apiRes.message = 'Seems you are not authorised to add coupon to this order!';
                          res.status(apiRes.status).json(apiRes)
                     })
@@ -902,7 +878,6 @@ setCoupon:(req,res)=>{
                  res.status(apiRes.status).json(apiRes)
             }
         }).catch((err)=>{
-            console.log(err);
             res.status(apiRes.status).json(apiRes)
         })
     }else{
@@ -918,8 +893,7 @@ setCoupon:(req,res)=>{
                 apiRes.message = 'Coupon removed!';
                 apiRes.success = true
             }).catch((err)=>{
-                apiRes.message = 'Error detucted while removing coupon from your order!';
-                console.log(err);                
+                apiRes.message = 'Error detucted while removing coupon from your order!';               
             }).then(()=>{
                 apiRes.message = 'Invalid coupon or something went wrong!';
                 res.status(apiRes.status).json(apiRes)
@@ -937,7 +911,6 @@ getBanner: (req,res)=>{
     apiRes.success = false;
     // console.log("BID: "+ req.params.bid);
     banners.findOne({ _id : req.params.bid }).then((data)=>{
-        console.log(data);
         if(data){
             apiRes.data = data;
             apiRes.success =true;
@@ -948,7 +921,6 @@ getBanner: (req,res)=>{
         }
     })
     .catch((err)=>{
-        console.log(err);
         apiRes.message = '400 bad Request!'
     })
     .then(()=>{
@@ -973,7 +945,6 @@ deleteBanner:async (req,res)=>{
             apiRes.success = true;
             
         }).catch((err)=>{
-            console.log(err);
             apiRes.message = 'We couldn\'t complete your proccess, try again later...';
         }).then(()=>{
             res.status(apiRes.status).json(apiRes)
@@ -1009,14 +980,12 @@ updateBanner:(req,res,next)=>{
     apiRes.success = false;
     let dataToUpload ={}
     dataToUpload.last_updated_user = res.locals.user.name 
-    console.log(req.body)
     if(req.body.bh1 && req.body.bh2 && req.body.para && req.body.tc && req.body.bc  && req.body.id && req.body.action){ ///&& req.body.action
         dataToUpload.bh1 = req.body.bh1;
         dataToUpload.bh2 = req.body.bh2;
         dataToUpload.para = req.body.para;
         dataToUpload.tc = req.body.tc;
         dataToUpload.bc = req.body.bc;
-        console.log(req.file);
         if(req.file){
 
             main.uploadimage(req,'banner','bnr-',false).then((data)=>{ // false = crop
@@ -1025,7 +994,6 @@ updateBanner:(req,res,next)=>{
                 dataToUpload.image = data.imageName
     
             }).catch((err)=>{
-                console.log(err);
                 apiRes.message= err.toString()
     
             }).then(()=>{
@@ -1036,7 +1004,6 @@ updateBanner:(req,res,next)=>{
                         apiRes.message = 'Successfully updated the banner!'
 
                     }).catch((err)=>{
-                        console.log(err);
                         apiRes.success = false;
                         apiRes.message = 'We couldn\'t update your data, try again!'
                     }).then(()=>{
@@ -1052,7 +1019,6 @@ updateBanner:(req,res,next)=>{
                 apiRes.message = 'Successfully updated the banner!'
 
             }).catch((err)=>{
-                console.log(err);
                 apiRes.success = false;
                 apiRes.message = 'We couldn\'t update your data, try again! .'
             }).then(()=>{
@@ -1100,13 +1066,11 @@ salesReport:async (req, res, next) => {
         },
         { $sort: { ordered_date: -1 } },
       ]);
-      console.log(salesData);
       res.render("admin/salesReport", {
         salesData,
         layout:'../views/layouts/admin'
       });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   },
@@ -1183,7 +1147,6 @@ salesReport:async (req, res, next) => {
           res.json("noresult");
         }
       } catch (error) {
-        console.log(error);
         next(error);
       }
     },

@@ -73,7 +73,6 @@ module.exports = {
       };
       res.redirect("/admin/addBrands");
     } catch (e) {
-      console.log(e);
       return res.status(400).render("admin/addBrands", {
         layout: '../views/layouts/admin',
         message: {

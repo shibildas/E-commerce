@@ -149,7 +149,6 @@ fillOTP:async (req, res, next) => {
     }
   },
   getResetLink:async(req,res)=>{
-    console.log("inside");
     const {id,token} = req.params;
 
     try {
@@ -194,12 +193,8 @@ updatePassword:async(req,res)=>{
       
       const verifyToken = jwt.verify(token,keysecret);
       const newPassword = await bcrypt.hash(password,10);
-      console.log(validuser,verifyToken);
-
       if(validuser && verifyToken._id){
-
-
-        // validuser.set({ password: password });
+       // validuser.set({ password: password });
         // await validuser.save();
         User.findOneAndUpdate(
           { _id: id },
@@ -247,7 +242,6 @@ updatePassword:async(req,res)=>{
         })
       }
   } catch (error) {
-    console.log(error)
     return res.status(401).render("user/reset", {
       message: {
         type: "error",
