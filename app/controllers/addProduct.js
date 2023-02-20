@@ -292,6 +292,7 @@ findProduct:async (req, res , next)=>{
   const product = await Product.findOne({ _id:id }).populate('brand')
   res.render('user/detail',{product, layout:'../views/layouts/layout'})
   } catch (error) {
+    error.status = 404;
     next(error)
     
   }  

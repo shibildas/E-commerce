@@ -21,7 +21,8 @@ module.exports = {
       
         // render the error page
         res.status(err.status || 500);
-        res.render('pages/500');
+        res.status(404).render("pages/404");
+        // res.render('pages/500');
       }    
     
 }
