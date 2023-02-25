@@ -218,7 +218,7 @@ codApprove:async(req,res)=>{
 
         if(orderData){
             if(paid==0){
-             orders.updateOne({_id:req.body.id},{$set:{order_status:'completed', 'payment.payment_id': 'Walt_'+req.body.id,'payment.payment_order_id':'WAlt_noOID','payment.payment_method':'Wallet_Paid', 'walletAdded':wal,'payment.payment_status':'completed','delivery_status.ordered.state':true,'delivery_status.ordered.date': Date.now()}})
+             orders.updateOne({_id:req.body.id},{$set:{order_status:'completed', 'payment.payment_id': 'Walt_'+req.body.id,'payment.payment_order_id':'WAlt_noOID','payment.payment_method':'Wallet_Paid', 'walletAdded':wal,'payment.payment_status':'completed','delivery_status.ordered.state':true,'delivery_status.ordered.date': Date.now(),ordered_date: new Date()}})
              .then(async ()=>{
                  await User.updateOne({_id:res.locals.user._id},{$inc:{ wallet: wal},$set:{cart:[]}})
                 apiRes.message = 'Order placed Successfully!';
@@ -230,7 +230,7 @@ codApprove:async(req,res)=>{
                 res.status(apiRes.status).json(apiRes) 
             })
             }else{
-            orders.updateOne({_id:req.body.id},{$set:{order_status:'completed', 'payment.payment_id': 'COD_'+req.body.id,'payment.payment_order_id':'COD_noOID','payment.payment_method':'cash_on_delivery', 'walletAdded':wal, 'delivery_status.ordered.state':true,'delivery_status.ordered.date': Date.now()}})
+            orders.updateOne({_id:req.body.id},{$set:{order_status:'completed', 'payment.payment_id': 'COD_'+req.body.id,'payment.payment_order_id':'COD_noOID','payment.payment_method':'cash_on_delivery', 'walletAdded':wal, 'delivery_status.ordered.state':true,'delivery_status.ordered.date': Date.now(),ordered_date: new Date()}})
             .then(async ()=>{
                 await User.updateOne({_id:res.locals.user._id},{$inc:{ wallet: wal },$set:{cart:[]}})
                 apiRes.message = 'Order placed Successfully!';
@@ -262,7 +262,7 @@ onlineApprove:async(req,res)=>{
 
         let orderData = await orders.findOne({_id:req.body.id, userid:res.locals.user._id, order_status:'pending'})
         if(orderData){
-            orders.updateOne({_id:req.body.id},{$set:{order_status:'completed', 'payment.payment_id': req.body.transId,'payment.payment_order_id':'ONLINE_noOID'+req.body.transId,'payment.payment_method':'online_Paypal','payment.payment_status' : 'completed', 'walletAdded':wal,'delivery_status.ordered.state':true,'delivery_status.ordered.date': Date.now()}})
+            orders.updateOne({_id:req.body.id},{$set:{order_status:'completed', 'payment.payment_id': req.body.transId,'payment.payment_order_id':'ONLINE_noOID'+req.body.transId,'payment.payment_method':'online_Paypal','payment.payment_status' : 'completed', 'walletAdded':wal,'delivery_status.ordered.state':true,'delivery_status.ordered.date': Date.now(),ordered_date: new Date()}})
             .then(async ()=>{
                 apiRes.message = 'Order placed Successfully!';
                 apiRes.success = true;
